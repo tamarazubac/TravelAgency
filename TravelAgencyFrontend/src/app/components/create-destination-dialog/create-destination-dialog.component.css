@@ -1,0 +1,58 @@
+h2.mat-dialog-title {
+  background-color: #c8def5;
+  color: black;
+  padding: 16px;
+  text-align: center;
+  margin: 0;
+}
+
+.dialog-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 300px;
+}
+
+.role-form {
+  width: 100%;
+  max-width: 600px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px; /* Adjust the spacing between inputs */
+}
+
+.form-field {
+  flex: 1;
+}
+
+.dialog-actions {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.cancel-button {
+  color: #d32f2f;
+  margin-right: 8px;
+}
+
+.save-button {
+  color: #1976d2;
+}
+
+.user-image {
+  display: block;
+  margin: 0 auto 16px;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+}

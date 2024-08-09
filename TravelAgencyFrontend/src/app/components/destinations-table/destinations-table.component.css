@@ -1,0 +1,31 @@
+.container {
+  width: 80%;
+  margin: auto;
+  margin-top: 2%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+table {
+  width: 100%;
+}
+
+button {
+  background-color: #3d9bf9;
+  color: white;
+  font-weight: 300;
+}

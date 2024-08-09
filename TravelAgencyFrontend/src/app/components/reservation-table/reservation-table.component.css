@@ -1,0 +1,35 @@
+.mat-elevation-z8 {
+  margin: auto;
+  text-align: center;
+  width: 80%;
+  margin-top: 2%;
+  padding: 1%;
+  box-shadow: none;
+  position: relative;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+button.add-reservation-button {
+  background-color: #3d9bf9;
+  color: white;
+  font-weight: 300;
+}
+
+button.add-reservation-button mat-icon {
+  margin-right: 8px;
+}
+
+table {
+  width: 100%;
+}

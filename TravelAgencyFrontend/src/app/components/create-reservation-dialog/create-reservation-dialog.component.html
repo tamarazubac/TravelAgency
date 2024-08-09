@@ -1,0 +1,63 @@
+<div class="container">
+  <mat-card class="form-card">
+    <img src="../../../assets/images/timefortravel-high-resolution-logo.png" alt="Header Image" class="header-image"/>
+    <mat-card-header>
+      <mat-card-title style="font-weight: 300;">Create Reservation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="reservationForm">
+        <div class="form-table">
+          <div class="form-row">
+            <mat-form-field appearance="fill">
+              <mat-label>Date From</mat-label>
+              <input matInput [matDatepicker]="pickerFrom" formControlName="date_from" />
+              <mat-datepicker-toggle matPrefix [for]="pickerFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Date To</mat-label>
+              <input matInput [matDatepicker]="pickerTo" formControlName="date_to" />
+              <mat-datepicker-toggle matPrefix [for]="pickerTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="fill">
+              <mat-label>Destination</mat-label>
+              <input matInput formControlName="destination" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Price per Person</mat-label>
+              <input matInput type="number" formControlName="price_per_person" />
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="fill">
+              <mat-label>Number of People</mat-label>
+              <input matInput type="number" formControlName="number_of_people" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Total Price</mat-label>
+              <input matInput [value]="totalPrice" disabled />
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="form-row">
+            <button mat-raised-button (click)="calculatePrice()"><mat-icon>attach_money</mat-icon>Calculate Price</button>
+          </div> -->
+        </div>
+
+        <!-- Button Container -->
+        <div class="button-container">
+          <button mat-raised-button color="accent" (click)="onCancel()" class="cancel-button"><mat-icon>cancel</mat-icon>Cancel</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" class="submit-button"><mat-icon>post_add</mat-icon>Submit</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

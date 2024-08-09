@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  height: 70%;
+}
+
+.form-card {
+  width: 600px;
+  padding: 20px;
+  box-shadow: none; /* Remove box shadow */
+  border: none; /* Remove border */
+  background-color: transparent; /* Ensure background is transparent */
+  margin-right: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form-group-flex > .mat-form-field {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.form-group-flex > .mat-form-field:last-child {
+  margin-right: 0;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  width: 120px;
+}
+
+.header-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.roles {
+  position: absolute;
+  right: 28px;
+  color: grey;
+  font-size: 0.9em;
+}
+
+
+.cancel-button {
+  background-color: white;
+  color: #f44336;
+  border: 1px solid;
+  font-weight: 300;
+  margin-right: 300px;
+}
+

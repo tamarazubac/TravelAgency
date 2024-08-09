@@ -1,0 +1,33 @@
+<div class="feedback-dialog">
+  <div class="feedback-header">
+    <h2 style="font-weight: 300;">We Value Your Feedback!</h2>
+    <p style="font-weight: 300;">Your feedback is important to us. Please let us know your thoughts and rate your experience.</p>
+  </div>
+  <form [formGroup]="rateForm" (ngSubmit)="submitFeedback()">
+    <div class="feedback-body">
+      <div class="profile-picture">
+        <img src="../../../assets/images/profile.png" alt="Profile Picture">
+      </div>
+      <div class="feedback-form">
+        <mat-form-field appearance="fill">
+          <mat-label style="font-weight: 300;">Write your comment here...</mat-label>
+          <textarea matInput placeholder="Your comment" rows="5" formControlName="comment"></textarea>
+        </mat-form-field>
+
+        <div class="star-rating">
+          <ng-container *ngFor="let star of stars; let i = index">
+            <mat-icon
+              class="star"
+              [ngClass]="{'filled': i < rating, 'unfilled': i >= rating}"
+              (click)="setRating(i + 1)"
+            >star</mat-icon>
+          </ng-container>
+        </div>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" style="font-weight: 300;margin-right: 20px;"><mat-icon>public</mat-icon>Publish</button>
+          <button mat-button type="button" (click)="cancelFeedback()" style="font-weight: 300;" class="cancel-button"><mat-icon>cancel</mat-icon>Cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

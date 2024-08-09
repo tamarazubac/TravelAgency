@@ -1,0 +1,53 @@
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+app-arrangement-card {
+  display: block;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 300;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+
+.moto {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.i {
+  font-style: italic;
+  margin-bottom: 40px;
+}
+
+.comments-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 1px solid #ccc;
+}
+
+.comments-heading {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.comments-message {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+

@@ -1,0 +1,70 @@
+<div class="mat-elevation-z8">
+  <div class="header-container">
+    <span class="header-title">All Arrangements</span>
+    <button *ngIf="roles.includes('SALESMAN')" [routerLink]="['addArrangement']"
+            mat-raised-button color="primary" style="font-weight: 300;" >
+      <mat-icon>luggage</mat-icon>
+      Add Arrangement
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Column Definitions -->
+    <ng-container matColumnDef="DateFrom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date From</th>
+      <td mat-cell *matCellDef="let element"> {{ element.date_from | date:'shortDate' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="DateTo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date To</th>
+      <td mat-cell *matCellDef="let element"> {{ element.date_to | date:'shortDate' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="FreeSeats">
+      <th mat-header-cell *matHeaderCellDef>Free Seats</th>
+      <td mat-cell *matCellDef="let element">
+        <span [ngClass]="{'sold-out': element.free_seats === 0}">
+          {{ element.free_seats === 0 ? 'SOLD - OUT' : element.free_seats }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PricePerPerson">
+      <th mat-header-cell *matHeaderCellDef>Price Per Person</th>
+      <td mat-cell *matCellDef="let element"> {{element.price_per_person}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Destination">
+      <th mat-header-cell *matHeaderCellDef>Destination</th>
+      <td mat-cell *matCellDef="let element"> {{element.destination.city_name}}, {{element.destination.country_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions-edit">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="primary" style="margin-right: 20px;font-weight: 300;" (click)="edit(element)">
+          <mat-icon>keyboard_double_arrow_right</mat-icon>
+          View and edit details
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions-reservations">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="accent" style="margin-right: 20px;font-weight: 300;" [routerLink]="['/allReservations', element.id, 'arrangement']">
+          <mat-icon>menu_book</mat-icon>
+          View reservations
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

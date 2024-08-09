@@ -1,0 +1,79 @@
+<div class="container">
+  <mat-card class="form-card">
+    <!-- <img src="path/to/your/header-image.jpg" alt="Header Image" class="header-image"/> -->
+    <mat-card-header>
+      <mat-card-title style="margin-bottom: 20px;">Create Arrangement</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="arrangementForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Free Seats</mat-label>
+            <input matInput type="number" formControlName="free_seats" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Price per Person</mat-label>
+            <input matInput type="number" formControlName="price_per_person" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-group-flex">
+          <mat-form-field appearance="fill">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="pickerFrom" formControlName="date_from" />
+            <mat-datepicker-toggle matPrefix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="pickerTo" formControlName="date_to" />
+            <mat-datepicker-toggle matPrefix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Destination</mat-label>
+            <mat-select formControlName="destination">
+              <mat-option *ngFor="let destination of destinations" [value]="destination.id">
+                {{ destination?.city_name }}, {{destination?.country_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Owner</mat-label>
+            <mat-select formControlName="owner">
+              <mat-option *ngFor="let user of users" [value]="user">
+                <span>{{ user.username }}</span>
+                <span class="roles" style="margin-right: 10px;">{{ getRolesAsString(user) }}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Submit Button Container -->
+        <div class="submit-button-container">
+          <button mat-raised-button color="primary" type="submit" class="submit-button"><mat-icon>post_add</mat-icon>Submit</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <!-- <mat-card-footer>
+      <img src="path/to/your/image.jpg" alt="Arrangement Image" class="form-image"/>
+    </mat-card-footer> -->
+  </mat-card>
+</div>

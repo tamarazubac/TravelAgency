@@ -1,0 +1,36 @@
+<div mat-dialog-content class="dialog-content">
+  <!-- User Info Section -->
+  <img [src]="'../../../assets/images/project-manager.png'" alt="User Image" class="user-image" />
+
+  <div class="user-info">
+    <!-- User Details -->
+    <p>Username: {{ element.username }}</p>
+    <p>First Name: {{ element.first_name }}</p>
+    <p>Last Name: {{ element.last_name }}</p>
+    <p>Phone: {{ element.phone }}</p>
+
+    <!-- Current Roles -->
+    <!-- <p>Current Roles: {{ currentRoles.join(', ') }}</p> -->
+  </div>
+
+  <!-- Role Selection Form -->
+  <form [formGroup]="rolesForm" class="role-form">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Assign New Roles</mat-label>
+      <mat-select formControlName="newRoles" class="role-select" multiple>
+        <mat-option *ngFor="let role of availableRoles" [value]="role.roleName">
+          {{ role.roleName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <button mat-button class="add-role-button" (click)="addRoles()"><mat-icon>add</mat-icon> Add Roles</button>
+    <button mat-button class="remove-role-button" (click)="removeRoles()"><mat-icon>remove</mat-icon> Remove Roles</button> -->
+  </form>
+</div>
+
+<!-- Dialog Actions -->
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button class="cancel-button" (click)="closeDialog()">Cancel</button>
+  <button mat-button class="save-button" (click)="saveRoles()">Save</button>
+</div>
+

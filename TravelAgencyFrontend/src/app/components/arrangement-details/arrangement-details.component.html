@@ -1,0 +1,75 @@
+<div class="arrangement-details">
+  <mat-card class="details-card">
+    <mat-card-header>
+      <div class="average-rating">
+        <p class="rating-text">
+          <mat-icon class="rating-star">star</mat-icon>
+          {{ averageRating | number: '1.1-1' }}
+        </p>
+      </div>
+      <mat-card-title style="margin-bottom: 30px;font-weight: 400;font-size: 22px;">
+        Arrangement: {{ arrangement.destination?.city_name }}, {{ arrangement.destination?.country_name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="details-container">
+        <div class="carousel">
+          <button class="prev" (click)="prevImage()">&#10094;</button>
+          <div class="carousel-images">
+            <img *ngFor="let image of images; let i = index"
+                 [src]="image"
+                 [class.active]="i === currentImageIndex"
+                 class="carousel-image" />
+          </div>
+          <button class="next" (click)="nextImage()">&#10095;</button>
+        </div>
+
+        <div class="details-info">
+          <p><strong>City:</strong> {{ arrangement.destination?.city_name }}</p>
+          <p><strong>Country:</strong> {{ arrangement.destination?.country_name }}</p>
+
+          <br>
+          <p><strong>Description:</strong></p>
+          <p>Discover the charm of {{ arrangement.destination?.city_name }} with our exclusive tour package. Explore the city’s iconic canals and historic landmarks while enjoying a gondola ride through picturesque waterways. Immerse yourself in local culture and cuisine with guided tours and delicious dining options. {{ arrangement.description }}</p>
+
+          <br>
+          <p><strong>From:</strong> {{ arrangement.date_from | date: 'shortDate' }}</p>
+          <p><strong>To:</strong> {{ arrangement.date_to | date: 'shortDate' }}</p>
+          <br>
+          <p><strong>Free seats:</strong> {{ arrangement.free_seats }}</p>
+          <br>
+          <p><strong>Price per person:</strong> {{ arrangement.price_per_person | currency }}</p>
+          <p *ngIf="arrangement.free_seats === 0" class="sold-out">Sold Out</p>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <div class="booking-info">
+          <p class="booking-message" style="margin-bottom: 20px;">Reserve your spot quickly, seats are filling up fast!</p>
+          <button mat-button class="details-button" style="font-weight: 300;" *ngIf="roles.includes('CUSTOMER')" (click)="book()">
+            <mat-icon>shopping_cart_checkout</mat-icon>
+            Book online
+          </button>
+        </div>
+      </div>
+
+      <div class="comments-section">
+        <p class="comments-heading">Comments</p>
+        <p class="comments-message">
+          See what others think and how they rated this tour. Your feedback is valuable to us!
+        </p>
+
+        <div class="rate-cards">
+          <app-rate-card *ngFor="let rate of rates" [rate]="rate"></app-rate-card>
+        </div>
+      </div>
+
+      <div class="add-rate-container">
+        <button mat-raised-button class="details-button" style="font-weight: 300;" (click)="openAddRateDialog()" *ngIf="roles.includes('CUSTOMER')">
+          <mat-icon>star_rate</mat-icon>
+          Add Rating
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

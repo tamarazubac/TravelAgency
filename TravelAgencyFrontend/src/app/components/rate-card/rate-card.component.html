@@ -1,0 +1,19 @@
+<mat-card class="rate-card">
+  <mat-card-header>
+    <div class="rate-card-header">
+      <img class="user-image" src="../../../assets/images/profile.png" alt="User Image">
+      <div class="user-info">
+        <h3>{{ rate.user.username }}</h3>
+        <p>{{ rate.comment }}</p>
+      </div>
+      <div class="star-rating">
+        <ng-container *ngFor="let star of stars; let i = index">
+          <mat-icon
+            class="star"
+            [ngClass]="{'filled': i < rate.rateNum, 'unfilled': i >= rate.rateNum}"
+          >star</mat-icon>
+        </ng-container>
+      </div>
+    </div>
+  </mat-card-header>
+</mat-card>

@@ -1,0 +1,56 @@
+.custom-card {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.custom-card img {
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.custom-card h2 {
+  margin-bottom: 10px;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.custom-card p {
+  margin: 10px 0;
+}
+
+.custom-card button.custom-button {
+  font-weight: 300;
+  display: block;
+  margin: 15px auto 0;
+  /* background-color: #3d9bf9; */
+  background-color: rgb(40, 155, 176);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.custom-card button.custom-button:hover {
+  background-color: #155a9e;
+  border-color: #155a9e;
+}
+
+p {
+  margin-top: 10px;
+  font-weight: 300;
+  font-size: 16px;
+  color: #555;
+}
+
+.date-range p {
+  margin: 5px 0;
+}
+
+.date-range strong {
+  color: #333;
+}
+
+*{
+  padding: 2px;
+}

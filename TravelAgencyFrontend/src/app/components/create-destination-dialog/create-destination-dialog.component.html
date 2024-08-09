@@ -1,0 +1,25 @@
+<h2 mat-dialog-title class="mat-dialog-title">Add Destination</h2>
+
+<div mat-dialog-content class="dialog-content">
+  <img [src]="'../../../assets/images/add.png'" alt="Add location Icon" class="user-image" />
+
+  <form [formGroup]="destinationForm" class="role-form">
+    <div class="input-container">
+      <mat-form-field class="form-field">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" placeholder="Enter country" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" placeholder="Enter city" />
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<!-- Dialog Actions -->
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button class="cancel-button" (click)="closeDialog()">Cancel</button>
+  <button mat-button class="save-button" (click)="saveDestination()">Save</button>
+</div>

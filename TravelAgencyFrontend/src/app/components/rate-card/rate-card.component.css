@@ -1,0 +1,42 @@
+.rate-card {
+  position: relative;
+}
+
+.rate-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.star {
+  font-size: 24px;
+  color: #ddd; /* Default star color */
+}
+
+.star.filled {
+  color: #ffeb3b; /* Yellow color for filled stars */
+}
+
+.star.unfilled {
+  color: #ddd; /* Default color for unfilled stars */
+}
