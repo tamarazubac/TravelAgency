@@ -16,7 +16,7 @@
     <!-- <button  *ngIf="roles.includes('SALESMAN')"  [routerLink]="['addArrangement']" style="float: right; background-color: #3d9bf9; color: white;" mat-raised-button color="primary"><mat-icon>travel_explore</mat-icon>Add arrangement</button> -->
     <button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')"  [routerLink]="['allArrangements']" style="float: right; background-color: #3d9bf9; color: white;font-weight: 300;" mat-raised-button color="primary"><mat-icon>explore</mat-icon>All arrangements</button>
     <button *ngIf="!roles.includes('UNAUTHENTICATED')" [routerLink]="['home']" (click)="logout()" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>logout</mat-icon>Log out</button>
-    <button  (click)="downloadReport()" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>report</mat-icon>Report - users</button>
+    <button  (click)="downloadReport1()" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>report</mat-icon>Report - users</button>
 
   </div>
 </mat-toolbar>

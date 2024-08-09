@@ -118,6 +118,42 @@ export class NavBarComponent implements OnInit{
     });
   }
 
+  downloadReport1(): void {
+    this.reportService.downloadReport1().subscribe((response: Blob) => {
+
+      const url = window.URL.createObjectURL(response);  //url for blob
+
+      // link for download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'report1.pdf';
+      link.click();
+
+
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Error downloading the report', error);
+    });
+  }
+
+  downloadReport2(): void {
+    this.reportService.downloadReport2().subscribe((response: Blob) => {
+
+      const url = window.URL.createObjectURL(response);  //url for blob
+
+      // link for download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'report2.pdf';
+      link.click();
+
+
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Error downloading the report', error);
+    });
+  }
+
 
 
 }
