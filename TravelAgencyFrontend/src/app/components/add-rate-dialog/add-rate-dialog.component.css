@@ -51,7 +51,7 @@ mat-form-field {
 mat-form-field textarea {
   width: 100%;
   font-size: 1em;
-  line-height: 1.5; /* Improve readability */
+  line-height: 1.5; /*readability*/
 }
 
 .form-actions {
@@ -80,20 +80,20 @@ mat-form-field textarea {
 .star-rating {
   display: flex;
   font-size: 2em;
-  color: #ccc; /* Default color */
+  color: #ccc;
   cursor: pointer;
 }
 
 .star-rating .star.filled {
-  color: #fbc02d; /* Yellow color for filled stars */
+  color: #fbc02d;
 }
 
 .star-rating .star.unfilled {
-  color: #ccc; /* Default color for unfilled stars */
+  color: #ccc;
 }
 
 .star-rating-container {
   display: flex;
-  align-items: center; /* Align items vertically in the center */
+  align-items: center;
 }
 

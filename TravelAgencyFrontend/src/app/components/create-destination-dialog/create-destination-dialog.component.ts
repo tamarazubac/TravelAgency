@@ -2,20 +2,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Destination } from 'src/app/models/destination';
 import { DestinationService } from 'src/app/services/destination/destination.service';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-create-destination-dialog',
   templateUrl: './create-destination-dialog.component.html',
   styleUrls: ['./create-destination-dialog.component.css'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, CommonModule]
+  imports: [FormsModule, ReactiveFormsModule, MaterialModule, CommonModule]
 })
 export class CreateDestinationDialogComponent implements OnInit {
 

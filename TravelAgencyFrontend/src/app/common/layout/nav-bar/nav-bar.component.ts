@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { MaterialModule } from '../../material/material.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { DateRangeDialogComponent } from 'src/app/components/date-range-dialog/date-range-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -27,19 +28,16 @@ export class NavBarComponent implements OnInit{
   constructor(private authService:AuthenticationService,
     private dialog:MatDialog,
     private userService:UserService,
-  private reportService : ReportService){
+    private reportService : ReportService,
+    private router: Router){}
 
-  }
 
   ngOnInit():void{
-
-    this.getUser();
 
     this.authService.userState.subscribe((result) => {
       this.roles=[]
       this.rolesObjects=[]
-      if(result &&
-        result != null){
+      if(result && result != null){
         this.rolesObjects=result.roles;
         this.roles = this.rolesObjects.map(role => role.roleName);
 
@@ -47,79 +45,21 @@ export class NavBarComponent implements OnInit{
           this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
         }
 
-        console.log("Roles 1 : ",this.roles)
-
-      }else{
+      }
+      else{
         this.rolesObjects.push({ roleName:"UNAUTHENTICATED" });
         this.roles=[];
         this.roles = this.rolesObjects.map(role => role.roleName);
-        console.log("Roles 2 : ",this.roles)
       }
     })
-
-
-
   }
 
   logout(): void {
     this.authService.logout();
     this.roles=[];
+    this.router.navigate(['/home']);
   }
 
-  getUser(){
-    const accessToken: any = localStorage.getItem('user');
-    const helper = new JwtHelperService();
-    const decodedToken = helper.decodeToken(accessToken);
-
-    if (decodedToken) {
-      this.userService.getByUsername(decodedToken.sub).subscribe(
-        (user: User) => {
-
-            this.userId=user?.id;
-            console.log("Usaoooo ",this.userId)
-
-        },
-        (error) => {
-          console.error('Error fetching user details:', error);
-        }
-      );
-    } else {
-      console.error('Error decoding JWT token');
-    }
-  }
-
-
-  addDestination(): void {
-    const dialogRef = this.dialog.open(CreateDestinationDialogComponent, {
-      width: '800px',
-      data: {},
-    });
-
-
-    // dialogRef.afterClosed().subscribe(result => {
-
-    // });
-
-
-  }
-
-  downloadReport(): void {
-    this.reportService.downloadUserReport().subscribe((response: Blob) => {
-
-      const url = window.URL.createObjectURL(response);  //url for blob
-
-      // link for download
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'userReport.pdf';
-      link.click();
-
-
-      window.URL.revokeObjectURL(url);
-    }, error => {
-      console.error('Error downloading the report', error);
-    });
-  }
 
   downloadReportDestination(): void {
     this.reportService.downloadReportDestination().subscribe((response: Blob) => {
@@ -146,11 +86,8 @@ export class NavBarComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog is closed');
     });
   }
-
-
-
 
 }

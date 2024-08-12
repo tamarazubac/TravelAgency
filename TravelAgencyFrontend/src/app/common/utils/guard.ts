@@ -39,16 +39,12 @@ export class AuthGuard implements CanActivate{
 
       const expectedRoles = route.data['roles'] as Array<string>;
 
-      console.log('Expected Roles:', expectedRoles);
-      console.log('User Roles:', this.roles);
-
       if (expectedRoles && !expectedRoles.some(role => this.roles.includes(role))) {
         console.log('User does not have required role. Redirecting to home...');
         this.router.navigate(['home']);
         return false;
       }
 
-      console.log('User authorized.');
       return true;
 
     } catch (error) {
@@ -70,7 +66,6 @@ export class AuthGuard implements CanActivate{
           (user: User) => {
             this.rolesObjects = user.roles;
             this.roles = this.rolesObjects.map(role => role.roleName);
-            console.log("Roles:", this.roles);
             resolve();
           },
           (error) => {

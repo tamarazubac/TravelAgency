@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { MaterialModule } from 'src/app/common/material/material.module';
 import { Rate } from 'src/app/models/rate';
 
 @Component({
@@ -9,7 +8,7 @@ import { Rate } from 'src/app/models/rate';
   templateUrl: './rate-card.component.html',
   styleUrls: ['./rate-card.component.css'],
   standalone:true,
-  imports:[MatCardModule,CommonModule,MatIconModule]
+  imports:[MaterialModule,CommonModule]
 })
 export class RateCardComponent {
   @Input() rate:Rate;

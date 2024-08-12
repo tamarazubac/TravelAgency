@@ -1,23 +1,17 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, ValidationErrors} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import { MatSelectModule} from '@angular/material/select';
-import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule,MatIconModule,MatButtonModule,MatSelectModule,
-    MatSlideToggleModule,CommonModule],
+  imports: [FormsModule, ReactiveFormsModule,MaterialModule,CommonModule],
 })
 export class RegisterFormComponent {
 
@@ -36,11 +30,6 @@ export class RegisterFormComponent {
 
   constructor(private cdr: ChangeDetectorRef, private router: Router,private userService:UserService) {
   }
-
-  ngOnInit(){
-
-  }
-
   navigateToHome() {
     this.router.navigate(['home']);
   }

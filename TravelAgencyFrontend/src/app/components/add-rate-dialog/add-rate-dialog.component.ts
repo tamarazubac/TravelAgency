@@ -45,8 +45,6 @@ export class AddRateDialogComponent {
   submitFeedback(): void {
     if (this.rateForm.valid) {
 
-      console.log("Rating : ",this.rating)
-
       const rate: Rate = {
         id: undefined,
         comment: this.rateForm.get('comment')?.value,
