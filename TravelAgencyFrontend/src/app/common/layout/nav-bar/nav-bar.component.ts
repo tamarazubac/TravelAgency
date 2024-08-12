@@ -8,6 +8,9 @@ import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { ReportService } from 'src/app/services/reports/report.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { MaterialModule } from '../../material/material.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { DateRangeDialogComponent } from 'src/app/components/date-range-dialog/date-range-dialog.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -118,15 +121,15 @@ export class NavBarComponent implements OnInit{
     });
   }
 
-  downloadReport1(): void {
-    this.reportService.downloadReport1().subscribe((response: Blob) => {
+  downloadReportDestination(): void {
+    this.reportService.downloadReportDestination().subscribe((response: Blob) => {
 
       const url = window.URL.createObjectURL(response);  //url for blob
 
       // link for download
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'report1.pdf';
+      link.download = 'DestinationReport.pdf';
       link.click();
 
 
@@ -136,23 +139,17 @@ export class NavBarComponent implements OnInit{
     });
   }
 
-  downloadReport2(): void {
-    this.reportService.downloadReport2().subscribe((response: Blob) => {
+  downloadBalanceReport(): void {
 
-      const url = window.URL.createObjectURL(response);  //url for blob
+    const dialogRef = this.dialog.open(DateRangeDialogComponent, {
+      width: '300px',
+    });
 
-      // link for download
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'report2.pdf';
-      link.click();
-
-
-      window.URL.revokeObjectURL(url);
-    }, error => {
-      console.error('Error downloading the report', error);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
+
 
 
 

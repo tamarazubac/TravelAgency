@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="BalanceReport"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="30"
+              bottomMargin="20"
+              uuid="e28d89b8-001a-4ecb-8792-6c0c41f5b2eb">
+
+    <!-- Parameters -->
+    <parameter name="START_DATE" class="java.util.Date"/>
+    <parameter name="END_DATE" class="java.util.Date"/>
+    <parameter name="TOTAL_REVENUE" class="java.lang.Double"/>
+
+    <!-- Define Fields -->
+    <field name="reservationId" class="java.lang.Integer"/>
+    <field name="destination" class="java.lang.String"/>
+    <field name="numberOfPeople" class="java.lang.Integer"/>
+    <field name="fullPrice" class="java.lang.Double"/>
+
+    <variable name="totalRevenue" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{fullPrice}]]></variableExpression>
+    </variable>
+
+    <!-- Title Band -->
+    <title>
+        <band height="60">
+            <textField>
+                <reportElement x="100" y="20" width="400" height="30"/>
+                <textElement>
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[
+                        "Balance Report from " +
+                        new java.text.SimpleDateFormat("yyyy-MM-dd").format($P{START_DATE}) +
+                        " to " +
+                        new java.text.SimpleDateFormat("yyyy-MM-dd").format($P{END_DATE})
+                    ]]>
+                </textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+
+    <!-- Column Header Band -->
+    <columnHeader>
+        <band height="60">
+            <staticText>
+                <reportElement x="0" y="0" width="100" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reservation ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="0" width="180" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Destination]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="280" y="0" width="120" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Number of People]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="400" y="0" width="80" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Full Price]]></text>
+            </staticText>
+
+            <!-- Header Lines -->
+            <line>
+                <reportElement x="0" y="20" width="555" height="1" forecolor="#000000"/>
+                <graphicElement>
+                    <pen lineWidth="0.8"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnHeader>
+
+    <!-- Detail Band -->
+    <detail>
+        <band height="30" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="100" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Integer">
+                    <![CDATA[$F{reservationId}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="0" width="180" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{destination}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="280" y="0" width="120" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Integer">
+                    <![CDATA[$F{numberOfPeople}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="400" y="0" width="80" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Double">
+                    <![CDATA[$F{fullPrice}]]>
+                </textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <!-- Page Footer -->
+    <pageFooter>
+        <band height="30">
+
+            <line>
+                <reportElement x="0" y="20" width="500" height="1" forecolor="#000000"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+
+            <textField>
+                <reportElement x="400" y="0" width="80" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Double">
+                    <![CDATA[$P{TOTAL_REVENUE}]]>
+                </textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="20" width="500" height="1" forecolor="#000000"/>
+                <graphicElement>
+                    <pen lineWidth="1"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="0" y="0" width="500" height="20"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Total Revenue: ]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+</jasperReport>

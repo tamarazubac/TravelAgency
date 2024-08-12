@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.bouncycastle.asn1.esf.SignerLocation;
 
 @Entity
 @Table(name="reservations")
@@ -26,4 +27,5 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public User user;
+
 }

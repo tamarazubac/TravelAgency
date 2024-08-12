@@ -1,0 +1,10 @@
+.custom-button {
+  border: 1px solid red;
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: red;
+}
+
+.custom-button:hover {
+  border-color: darkred;
+}

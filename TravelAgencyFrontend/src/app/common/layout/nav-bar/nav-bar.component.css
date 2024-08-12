@@ -1,5 +1,6 @@
 mat-toolbar {
   background-color: white;
+  flex-wrap: nowrap;
 }
 img{
   height: 90px;

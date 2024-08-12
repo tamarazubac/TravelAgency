@@ -48,4 +48,5 @@ public class DestinationService implements IDestinationService {
     public void delete(Long id) {
         destinationRepository.deleteById(id);
     }
+
 }
