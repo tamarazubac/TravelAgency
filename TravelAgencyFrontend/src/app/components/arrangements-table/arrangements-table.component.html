@@ -52,7 +52,7 @@
     <ng-container matColumnDef="actions-reservations">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-button color="accent" style="margin-right: 20px;font-weight: 300;" [routerLink]="['/allReservations', element.id, 'arrangement']">
+        <button mat-button color="primary" style="margin-right: 20px;font-weight: 300;" [routerLink]="['/allReservations', element.id, 'arrangement']">
           <mat-icon>menu_book</mat-icon>
           View reservations
         </button>

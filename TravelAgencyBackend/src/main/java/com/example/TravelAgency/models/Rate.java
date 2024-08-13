@@ -22,10 +22,10 @@ public class Rate {
     public String comment;
     public int rateNum;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "arrangement_id", nullable = false)
     public Arrangement arrangement;
 
