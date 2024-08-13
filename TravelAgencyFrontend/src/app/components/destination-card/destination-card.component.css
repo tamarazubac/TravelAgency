@@ -52,3 +52,17 @@
 .next {
   right: 0;
 }
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust spacing below the header if needed */
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd; /* Adds a light gray line */
+  margin: 16px 0; /* Adds space above and below the line */
+}

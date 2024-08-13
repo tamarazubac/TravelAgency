@@ -1,6 +1,14 @@
 <mat-card class="custom-card">
   <mat-card-content>
-    <h2 style="font-weight: 300;">{{ destination.city_name }}, {{ destination.country_name }}</h2>
+    <div class="header-container">
+      <h2 class="title" style="font-weight: 300;">{{ destination.city_name }}, {{ destination.country_name }}</h2>
+      <button mat-icon-button color="accent" (click)="openDeleteDialog(destination.id,'')" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <hr class="divider">
+
 
     <div class="carousel">
       <button class="prev" (click)="prevImage()">&#10094;</button>

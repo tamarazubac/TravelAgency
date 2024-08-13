@@ -1,7 +1,13 @@
 package com.example.TravelAgency.services;
 
+import com.example.TravelAgency.models.Arrangement;
 import com.example.TravelAgency.models.Destination;
+import com.example.TravelAgency.models.Rate;
+import com.example.TravelAgency.models.Reservation;
+import com.example.TravelAgency.repositories.IArrangementRepository;
 import com.example.TravelAgency.repositories.IDestinationRepository;
+import com.example.TravelAgency.repositories.IRateRepository;
+import com.example.TravelAgency.repositories.IReservationRepository;
 import com.example.TravelAgency.services.interfaces.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +26,12 @@ import java.util.UUID;
 public class DestinationService implements IDestinationService {
     @Autowired
     public IDestinationRepository destinationRepository;
+    @Autowired
+    public IArrangementRepository arrangementRepository;
+    @Autowired
+    public IRateRepository rateRepository;
+    @Autowired
+    public IReservationRepository reservationRepository;
 
     private final String IMAGE_DIR = "src/main/resources/images/";
     @Override
@@ -55,6 +67,25 @@ public class DestinationService implements IDestinationService {
 
     @Override
     public void delete(Long id) {
+
+        //deleting arrangements with this destination and their rates and reservations
+
+        List<Arrangement> arrangements=arrangementRepository.findByDestinationId(id);
+
+        for(Arrangement a:arrangements){
+            List<Reservation> reservations=reservationRepository.findByArrangementId(a.getId());
+            List<Rate> rates=rateRepository.findByArrangementId(a.getId());
+
+            for(Reservation r:reservations){
+                reservationRepository.deleteById(r.id);
+            }
+            for(Rate r: rates){
+                rateRepository.deleteById(r.id);
+            }
+
+            arrangementRepository.deleteById(a.getId());
+        }
+
         destinationRepository.deleteById(id);
     }
 

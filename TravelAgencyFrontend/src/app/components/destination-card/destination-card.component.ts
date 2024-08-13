@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 import { MaterialModule } from 'src/app/common/material/material.module';
 import { Destination } from 'src/app/models/destination';
 import { DestinationService } from 'src/app/services/destination/destination.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 
 
@@ -24,7 +27,9 @@ export class DestinationCardComponent {
   @Input()
   destination:Destination;
 
-  constructor(private router:Router, private destinationService:DestinationService){}
+  constructor(private router:Router, private destinationService:DestinationService,
+              private dialog:MatDialog,private snackBar:MatSnackBar
+  ){}
 
   images: string[] = [];
   currentImageIndex = 0;
@@ -58,6 +63,36 @@ export class DestinationCardComponent {
         }
       });
     }
+  }
+
+
+  openDeleteDialog(itemId: number|undefined, itemName: string): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { itemType: 'Destination', itemId, itemName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && itemId) {
+        this.delete(itemId);
+      }
+    });
+  }
+
+  delete(id:number):void{
+
+    this.destinationService.delete(id).subscribe({
+      next: () => {
+        console.log(`Destination with id ${id} deleted successfully`);
+        this.snackBar.open('Destination deleted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+      },
+      error: (err) => {
+        console.error('Failed to delete user', err);
+      }
+    });
+
   }
 
 }
