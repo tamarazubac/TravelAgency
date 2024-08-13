@@ -9,5 +9,6 @@ public class BalanceReportDTO {
     private Integer reservationId;
     private String destination;
     private Integer numberOfPeople;
+    public Double pricePerPerson;
     private Double fullPrice;
 }

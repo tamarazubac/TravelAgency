@@ -153,6 +153,7 @@ public class ReportService {
                         Math.toIntExact(res.getId()),
                         res.getArrangement().getDestination().getCityName() + ", " + res.getArrangement().getDestination().getCountryName(), // Combine city and country
                         res.getNumberOfPeople(),
+                        res.getArrangement().getPricePerPerson(),
                         res.getFullPrice()
                 ))
                 .collect(Collectors.toList());
