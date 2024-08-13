@@ -9,7 +9,9 @@ import com.example.TravelAgency.models.Destination;
 import com.example.TravelAgency.services.interfaces.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +73,15 @@ public class DestinationController {
         return new DestinationDTO(destination);
     }
 
+
+    public void uploadImage(Long id, MultipartFile file) throws IOException {
+
+        destinationService.uploadImage(id,file);
+
+    }
+
+    public List<String> getImages(Long id){
+        return destinationService.getImages(id);
+    }
 
 }

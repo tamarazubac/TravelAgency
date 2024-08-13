@@ -23,4 +23,10 @@ public class Destination {
     public String cityName;
     public String countryName;
 
+
+    @ElementCollection
+    @CollectionTable(name = "destination_images", joinColumns = @JoinColumn(name = "destination_id"))
+    @Column(name = "image_path")
+    private List<String> imagePaths;
+
 }

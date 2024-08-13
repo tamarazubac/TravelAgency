@@ -15,6 +15,20 @@
         <input matInput formControlName="city" placeholder="Enter city" />
       </mat-form-field>
     </div>
+
+
+    <div class="custom-file-upload">
+      <label for="file-upload">Choose image:</label>
+      <input id="file-upload" type="file" (change)="onFileChange($event)" />
+      <button mat-button (click)="addImageToList()" style="margin-top: 20px; font-weight: 300;margin-left: 250px;"><mat-icon>add_a_photo</mat-icon>Add Image</button>
+    </div>
+
+    <div class="image-list">
+      <div *ngFor="let image of imageList" class="image-item">
+        <img [src]="image.url" alt="Uploaded Image" class="image-thumbnail" />
+      </div>
+    </div>
+
   </form>
 </div>
 

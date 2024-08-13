@@ -2,7 +2,10 @@
   <mat-card-content>
     <h2>{{ arrangement.destination?.city_name }}, {{ arrangement.destination?.country_name }}</h2>
 
-    <img src="../../../assets/images/venezia.jpg" alt="Default Image" style="width: 400px; height: 200px;">
+    <img *ngIf="images && images.length > 0"
+         [src]="images[0]"
+         alt="Destination Image"
+         style="width: 100%; height: auto; max-width: 400px; max-height: 200px; object-fit: cover;">
 
     <br>
 

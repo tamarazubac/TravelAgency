@@ -4,11 +4,6 @@ import { MaterialModule } from 'src/app/common/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit,ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -21,22 +16,19 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { Destination } from 'src/app/models/destination';
 import { DestinationService } from 'src/app/services/destination/destination.service';
 import { CreateDestinationDialogComponent } from '../create-destination-dialog/create-destination-dialog.component';
+import { DestinationCardComponent } from "../destination-card/destination-card.component";
 @Component({
   selector: 'app-destinations-table',
   templateUrl: './destinations-table.component.html',
   styleUrls: ['./destinations-table.component.css'],
   standalone:true,
-  imports: [RouterModule, MaterialModule, CommonModule, LayoutModule]
+  imports: [RouterModule, MaterialModule, CommonModule, LayoutModule, DestinationCardComponent]
 
 })
 export class DestinationsTableComponent implements OnInit{
 
   destinations:Destination[];
-  dataSource:MatTableDataSource<Destination>;
-  displayedColumns: string[] = ['City','Country'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   rolesObjects:Role[]=[];
   roles:string[]=[]
@@ -81,9 +73,8 @@ export class DestinationsTableComponent implements OnInit{
   getAllDestinations(): void {
     this.destinationService.getAll().subscribe({
       next: (data: Destination[]) => {
-        this.dataSource = new MatTableDataSource<Destination>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+
+        this.destinations=data;
 
         console.log(this.destinations)
       },

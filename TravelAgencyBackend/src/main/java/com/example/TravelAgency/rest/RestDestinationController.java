@@ -4,18 +4,33 @@ import com.example.TravelAgency.dtos.DestinationDTO;
 import com.example.TravelAgency.models.Destination;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/destinations")
 @CrossOrigin(origins = "http://localhost:4200")
 public class RestDestinationController {
+
+    @Value("${image.upload-dir}")
+    private String imageUploadDir;
 
     @Autowired
     public DestinationController destinationController;
@@ -58,6 +73,47 @@ public class RestDestinationController {
     public ResponseEntity<Destination> delete(@PathVariable Long id){
         destinationController.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+    @PostMapping("/{id}/upload-image")
+    public ResponseEntity<Void> uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            destinationController.uploadImage(id, file);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}/images")
+    public ResponseEntity<List<String>> getImages(@PathVariable Long id) {
+        List<String> imageNames = destinationController.getImages(id);
+        List<String> imageUrls = imageNames.stream()
+                .map(name -> MvcUriComponentsBuilder.fromMethodName(RestDestinationController.class, "serveFile", name).build().toUriString())
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(imageUrls, HttpStatus.OK);
+    }
+
+    @GetMapping("/images/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        try {
+            Path file = Paths.get(imageUploadDir).resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(file))
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

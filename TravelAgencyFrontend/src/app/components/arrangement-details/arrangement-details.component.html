@@ -19,7 +19,8 @@
             <img *ngFor="let image of images; let i = index"
                  [src]="image"
                  [class.active]="i === currentImageIndex"
-                 class="carousel-image" />
+                 class="carousel-image"
+                 style="width: 100%; height: auto; max-width: 600px; max-height: 400px; object-fit: cover;" />
           </div>
           <button class="next" (click)="nextImage()">&#10095;</button>
         </div>
