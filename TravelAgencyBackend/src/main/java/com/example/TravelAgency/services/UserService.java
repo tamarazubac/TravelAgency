@@ -1,9 +1,7 @@
 package com.example.TravelAgency.services;
 
-import com.example.TravelAgency.models.Role;
-import com.example.TravelAgency.models.User;
-import com.example.TravelAgency.repositories.IRoleRepository;
-import com.example.TravelAgency.repositories.IUserRepository;
+import com.example.TravelAgency.models.*;
+import com.example.TravelAgency.repositories.*;
 import com.example.TravelAgency.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,12 @@ public class UserService implements IUserService {
     public IUserRepository userRepository;
     @Autowired
     public IRoleRepository roleRepository;
+    @Autowired
+    public IReservationRepository reservationRepository;
+    @Autowired
+    public IArrangementRepository arrangementRepository;
+    @Autowired
+    public IRateRepository rateRepository;
     @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
@@ -62,6 +66,26 @@ public class UserService implements IUserService {
 
     @Override
     public void delete(Long id) {
+
+        //deleting users reservations and users rates
+
+        List<Reservation> reservations=reservationRepository.findByUserId(id);
+
+        List<Rate> rates= rateRepository.findByUserId(id);
+
+        for(Reservation r : reservations){
+
+            Arrangement arrangement=r.getArrangement();
+            int currentAvailableSeats=arrangement.freeSeats;
+            arrangement.setFreeSeats(currentAvailableSeats+r.numberOfPeople);  //new available free seats
+            arrangementRepository.saveAndFlush(arrangement);
+            reservationRepository.deleteById(r.id);
+        }
+
+        for(Rate r:rates){
+            rateRepository.deleteById(r.getId());
+        }
+
         userRepository.deleteById(id);
     }
 
@@ -82,11 +106,8 @@ public class UserService implements IUserService {
             userRepository.saveAndFlush(user);  //empty list of roles
 
             Role role = roleOpt.get();
-//            if(!user.getRoles().contains(roleRepository.findByRoleName(role.getRoleName()))) {
             user.getRoles().add(role);
-//            }
 
-            System.out.println("Useeeeeeeeeeeeeeeeeeer : "+user.toString());
             userRepository.saveAndFlush(user);
             return Optional.of(user);
         }

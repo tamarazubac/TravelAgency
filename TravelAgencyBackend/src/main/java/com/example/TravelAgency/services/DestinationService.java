@@ -1,18 +1,39 @@
 package com.example.TravelAgency.services;
 
+import com.example.TravelAgency.models.Arrangement;
 import com.example.TravelAgency.models.Destination;
+import com.example.TravelAgency.models.Rate;
+import com.example.TravelAgency.models.Reservation;
+import com.example.TravelAgency.repositories.IArrangementRepository;
 import com.example.TravelAgency.repositories.IDestinationRepository;
+import com.example.TravelAgency.repositories.IRateRepository;
+import com.example.TravelAgency.repositories.IReservationRepository;
 import com.example.TravelAgency.services.interfaces.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DestinationService implements IDestinationService {
     @Autowired
     public IDestinationRepository destinationRepository;
+    @Autowired
+    public IArrangementRepository arrangementRepository;
+    @Autowired
+    public IRateRepository rateRepository;
+    @Autowired
+    public IReservationRepository reservationRepository;
+
+    private final String IMAGE_DIR = "src/main/resources/images/";
     @Override
     public Optional<Destination> findById(Long id) {
         return destinationRepository.findById(id);
@@ -46,7 +67,55 @@ public class DestinationService implements IDestinationService {
 
     @Override
     public void delete(Long id) {
+
+        //deleting arrangements with this destination and their rates and reservations
+
+        List<Arrangement> arrangements=arrangementRepository.findByDestinationId(id);
+
+        for(Arrangement a:arrangements){
+            List<Reservation> reservations=reservationRepository.findByArrangementId(a.getId());
+            List<Rate> rates=rateRepository.findByArrangementId(a.getId());
+
+            for(Reservation r:reservations){
+                reservationRepository.deleteById(r.id);
+            }
+            for(Rate r: rates){
+                rateRepository.deleteById(r.id);
+            }
+
+            arrangementRepository.deleteById(a.getId());
+        }
+
         destinationRepository.deleteById(id);
+    }
+
+
+
+    public void uploadImage(Long destinationId, MultipartFile file) throws IOException {
+        System.out.println("Id : "+destinationId);
+        Optional<Destination> destinationOpt = destinationRepository.findById(destinationId);
+
+        if (destinationOpt.isPresent()) {
+            Destination destination = destinationOpt.get();
+
+            // unique file name
+            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+            Path filePath = Paths.get(IMAGE_DIR + fileName);
+
+            System.out.println(filePath);
+
+            // saving file to the file system
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, file.getBytes());
+
+            destination.getImagePaths().add(fileName);
+            destinationRepository.save(destination);
+        }
+    }
+
+    public List<String> getImages(Long destinationId) {
+        Optional<Destination> destinationOpt = destinationRepository.findById(destinationId);
+        return destinationOpt.map(Destination::getImagePaths).orElse(Collections.emptyList());
     }
 
 }

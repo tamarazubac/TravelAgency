@@ -23,6 +23,11 @@ export class RateService {
   }
 
 
+  delete(id: number): Observable<void> {
+    const url = `${environment.apiHost}rates/${id}`;
+    return this.httpClient.delete<void>(url);
+  }
+
 
 
 

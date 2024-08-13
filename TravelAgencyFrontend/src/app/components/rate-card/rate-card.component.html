@@ -6,6 +6,7 @@
         <h3>{{ rate.user.username }}</h3>
         <p>{{ rate.comment }}</p>
       </div>
+
       <div class="star-rating">
         <ng-container *ngFor="let star of stars; let i = index">
           <mat-icon
@@ -13,7 +14,12 @@
             [ngClass]="{'filled': i < rate.rateNum, 'unfilled': i >= rate.rateNum}"
           >star</mat-icon>
         </ng-container>
+
+        <button mat-icon-button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" (click)="openDeleteDialog(rate.id,'')" style="margin-left: 20px; margin: top 10px;;">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </div>
+
   </mat-card-header>
 </mat-card>

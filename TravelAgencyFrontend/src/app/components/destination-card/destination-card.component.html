@@ -1,0 +1,25 @@
+<mat-card class="custom-card">
+  <mat-card-content>
+    <div class="header-container">
+      <h2 class="title" style="font-weight: 300;">{{ destination.city_name }}, {{ destination.country_name }}</h2>
+      <button mat-icon-button color="accent" (click)="openDeleteDialog(destination.id,'')" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <hr class="divider">
+
+
+    <div class="carousel">
+      <button class="prev" (click)="prevImage()">&#10094;</button>
+      <div class="carousel-images">
+        <img *ngFor="let image of images; let i = index"
+             [src]="image"
+             [class.active]="i === currentImageIndex"
+             class="carousel-image"
+             style="width: 100%; height: auto; max-width: 400px; max-height: 200px; object-fit: cover;"/>
+      </div>
+      <button class="next" (click)="nextImage()">&#10095;</button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -13,5 +13,8 @@ public interface IRateRepository extends JpaRepository<Rate,Long> {
 
     @Query("SELECT r FROM Rate r WHERE r.arrangement.id = :id")
     List<Rate> findByArrangementId(@Param("id") Long id);
+
+    @Query("SELECT r FROM Rate r WHERE r.user.id = :id")
+    List<Rate> findByUserId(@Param("id") Long id);
     void deleteByArrangementId(Long id);
 }

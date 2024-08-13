@@ -56,3 +56,76 @@ h2.mat-dialog-title {
   height: 100px;
   border-radius: 8px;
 }
+
+
+.custom-file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.custom-file-upload label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.custom-file-upload input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.custom-file-upload input[type="file"]::file-selector-button {
+  background-color: #3d9bf9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.custom-file-upload input[type="file"]::file-selector-button:hover {
+  background-color: #2a7fbf;
+}
+
+.custom-file-upload button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #3d9bf9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-file-upload button:hover {
+  background-color: #2a7fbf;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.image-item {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.image-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

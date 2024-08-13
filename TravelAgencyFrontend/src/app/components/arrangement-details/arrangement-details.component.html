@@ -19,7 +19,8 @@
             <img *ngFor="let image of images; let i = index"
                  [src]="image"
                  [class.active]="i === currentImageIndex"
-                 class="carousel-image" />
+                 class="carousel-image"
+                 style="width: 100%; height: auto; max-width: 600px; max-height: 400px; object-fit: cover;" />
           </div>
           <button class="next" (click)="nextImage()">&#10095;</button>
         </div>
@@ -45,8 +46,9 @@
 
       <div class="button-container">
         <div class="booking-info">
-          <p class="booking-message" style="margin-bottom: 20px;">Reserve your spot quickly, seats are filling up fast!</p>
-          <button mat-button class="details-button" style="font-weight: 300;" *ngIf="roles.includes('CUSTOMER')" (click)="book()">
+          <p class="booking-message" style="margin-bottom: 20px;" *ngIf="roles.includes('CUSTOMER') && isFutureDate()">Reserve your spot quickly, seats are filling up fast!</p>
+          <p class="booking-message" style="margin-bottom: 20px;color: red;" *ngIf="!isFutureDate()">Not active anymore ... </p>
+          <button mat-button class="details-button" style="font-weight: 300;" *ngIf="roles.includes('CUSTOMER') && isFutureDate()" (click)="book()">
             <mat-icon>shopping_cart_checkout</mat-icon>
             Book online
           </button>

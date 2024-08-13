@@ -20,6 +20,13 @@ export class CreateDestinationDialogComponent implements OnInit {
   destinationForm: FormGroup;
   destinations:Destination[]=[];
 
+  selectedFile: File | null = null;
+
+  imageList: { file: File, url: string }[] = [];
+
+  createdDestinationId:number|undefined;
+
+
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -29,7 +36,7 @@ export class CreateDestinationDialogComponent implements OnInit {
   ) {
     this.destinationForm = this.fb.group({
       country: [''],
-      city: ['']
+      city: [''],
     });
   }
 
@@ -57,7 +64,16 @@ export class CreateDestinationDialogComponent implements OnInit {
 
       this.destinationService.create(newDestination).subscribe({
         next: (response: Destination) => {
+          if(response){
+            this.createdDestinationId=response.id;
+            this.uploadImages(this.createdDestinationId); //uploading images
+
+          }
+
           this.snackBar.open('Destination created successfully!', 'Close', { duration: 2000 });
+
+
+
           this.destinationForm.reset();
         },
         error: (err) => {
@@ -81,6 +97,39 @@ export class CreateDestinationDialogComponent implements OnInit {
       error: (err) => {
         console.error('Failed to load destinations', err);
       }
+    });
+  }
+
+  onFileChange(event: any): void {
+    if (event.target.files && event.target.files.length) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
+  addImageToList(): void {
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (this.selectedFile) {
+          this.imageList.push({ file: this.selectedFile, url: reader.result as string });
+          console.log(this.imageList)
+        }
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  uploadImages(destinationId: number|undefined): void {
+    if(destinationId)
+    this.imageList.forEach((image) => {
+      this.destinationService.uploadImage(destinationId, image.file).subscribe({
+        next: () => {
+          console.log(`Image uploaded successfully for destination ${destinationId}`);
+        },
+        error: (err) => {
+          console.error('Failed to upload image', err);
+        }
+      });
     });
   }
 }

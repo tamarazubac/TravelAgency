@@ -44,7 +44,8 @@ export class CreateArrangementComponent {
   constructor(private fb: FormBuilder,
     private destinationService:DestinationService,
     private userService:UserService,
-    private arrangementService:ArrangementService
+    private arrangementService:ArrangementService,
+    private snackBar:MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -92,6 +93,10 @@ export class CreateArrangementComponent {
       this.arrangementService.create(newArrangement).subscribe(
         (response: Arrangement) => {
           console.log('Arrangement created successfully:', response);
+          this.snackBar.open('Arrangement created successfully!', 'Close', {
+            duration: 4000,
+            horizontalPosition: 'center'
+          });
         },
         (error) => {
           console.error('Error creating arrangement:', error);
@@ -106,18 +111,40 @@ export class CreateArrangementComponent {
     return user.roles.map(role => role.roleName).join(', ');
   }
 
+  private isUserDuplicate(existingUsers: User[], newUser: User): boolean {
+    return existingUsers.some(user => user.id === newUser.id);
+  }
 
 
   getUsersByRole(roleName: string): void {
     this.userService.getUsersByRole(roleName).subscribe(
       (users: User[]) => {
-        console.log(roleName +": "+users)
-        this.users = this.users.concat(users);
+        console.log(roleName + ": " + users);
+
+        const uniqueUsers = users.filter(user =>
+          !this.isUserDuplicate(this.users, user)
+        );
+
+        this.users = this.users.concat(uniqueUsers);
       },
       (error) => {
         console.error('Error fetching users by role', error);
       }
     );
   }
+
+
+
+  // getUsersByRole(roleName: string): void {
+  //   this.userService.getUsersByRole(roleName).subscribe(
+  //     (users: User[]) => {
+  //       console.log(roleName +": "+users)
+  //       this.users = this.users.concat(users);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching users by role', error);
+  //     }
+  //   );
+  // }
 
 }

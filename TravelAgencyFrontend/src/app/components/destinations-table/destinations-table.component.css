@@ -16,16 +16,28 @@
   font-weight: 300;
 }
 
-.mat-elevation-z8 {
-  box-shadow: none;
-}
-
-table {
-  width: 100%;
-}
 
 button {
   background-color: #3d9bf9;
   color: white;
   font-weight: 300;
+}
+
+
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates two columns */
+  gap: 20px; /* Space between cards */
+}
+
+.custom-card {
+  width: 100%; /* Ensures the card takes up the full width of the column */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mat-card-content {
+  padding: 16px;
 }

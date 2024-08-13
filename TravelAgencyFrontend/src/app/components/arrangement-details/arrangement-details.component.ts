@@ -15,6 +15,7 @@ import { User } from 'src/app/models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from 'src/app/services/user/user.service';
 import { CreateReservationDialogComponent } from '../create-reservation-dialog/create-reservation-dialog.component';
+import { DestinationService } from 'src/app/services/destination/destination.service';
 
 
 @Component({
@@ -42,11 +43,15 @@ export class ArrangementDetailsComponent implements OnInit {
   unfilledStars: number = 0;
 
   // Define static images
-  images: string[] = [
-    "../../../assets/images/nice.jpg",
-    "../../../assets/images/ven.jpg",
-    "../../../assets/images/ljorent.jpg"
-  ];
+  // images: string[] = [
+  //   "../../../assets/images/nice.jpg",
+  //   "../../../assets/images/ven.jpg",
+  //   "../../../assets/images/ljorent.jpg"
+  // ];
+
+  images: string[] = [];
+
+
 
   constructor(
     private arrangementService: ArrangementService,
@@ -54,7 +59,8 @@ export class ArrangementDetailsComponent implements OnInit {
     private authService:AuthenticationService,
     private userService:UserService,
     private route: ActivatedRoute,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private destinationService:DestinationService
 
   ) { }
 
@@ -67,6 +73,7 @@ export class ArrangementDetailsComponent implements OnInit {
 
         this.loadRates();
         this.getUser();
+        this.loadImages();
       },
       error: () => {
         console.log('Error fetching arrangement details');
@@ -85,13 +92,10 @@ export class ArrangementDetailsComponent implements OnInit {
           this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
         }
 
-        console.log("Roles 1 : ",this.roles)
-
       }else{
         this.rolesObjects.push({ roleName:"UNAUTHENTICATED" });
         this.roles=[];
         this.roles = this.rolesObjects.map(role => role.roleName);
-        console.log("Roles 2 : ",this.roles)
       }
     })
   }
@@ -221,5 +225,28 @@ export class ArrangementDetailsComponent implements OnInit {
 
     });
 
+  }
+
+  loadImages(): void {
+    if (this.arrangement && this.arrangement.destination && this.arrangement?.destination.id ) {
+      this.destinationService.getImages(this.arrangement?.destination.id).subscribe({
+        next: (data: string[]) => {
+          this.images = data;
+          console.log('Images loaded:', this.images);
+        },
+        error: (err) => {
+          console.error('Error loading images:', err);
+        }
+      });
+    }
+  }
+
+
+  isFutureDate(): boolean {
+    if (this.arrangement && this.arrangement.date_from) {
+      const today = new Date();
+      return new Date(this.arrangement.date_from) > today;
+    }
+    return false;
   }
 }

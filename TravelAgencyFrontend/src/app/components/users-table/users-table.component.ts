@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import { EditRolesDialogComponent } from '../edit-roles-dialog/edit-roles-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users-table',
@@ -29,7 +31,7 @@ export class UsersTableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private service: UserService,private route: ActivatedRoute,private router: Router,private dialog:MatDialog) {
+  constructor(private service: UserService,private route: ActivatedRoute,private router: Router,private dialog:MatDialog,private snackBar:MatSnackBar) {
 
   }
 
@@ -67,11 +69,28 @@ export class UsersTableComponent {
 
   }
 
+
+  openDeleteDialog(itemId: number, itemName: string): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { itemType: 'User', itemId, itemName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(itemId);
+      }
+    });
+  }
+
   delete(id:number):void{
 
     this.service.deleteUserById(id).subscribe({
       next: () => {
         console.log(`User with id ${id} deleted successfully`);
+        this.snackBar.open('User deleted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
         this.getAllUsers();
       },
       error: (err) => {

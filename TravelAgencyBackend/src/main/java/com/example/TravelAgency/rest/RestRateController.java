@@ -48,7 +48,7 @@ public class RestRateController {
     }
 
     @DeleteMapping(value="/{id}")
-    @PreAuthorize("hasAnyAuthority('SALESMAN','CUSTOMER')")
+    @PreAuthorize("hasAnyAuthority('SALESMAN','ADMIN')")
     public ResponseEntity<Rate> delete(@PathVariable Long id){
         rateController.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

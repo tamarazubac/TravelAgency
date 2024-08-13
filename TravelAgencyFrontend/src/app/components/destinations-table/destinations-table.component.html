@@ -8,26 +8,9 @@
     </button>
   </div>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Columns definitions here... -->
-      <ng-container matColumnDef="City">
-        <th mat-header-cell *matHeaderCellDef>City</th>
-        <td mat-cell *matCellDef="let element"> {{element.city_name}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Country">
-        <th mat-header-cell *matHeaderCellDef>Country</th>
-        <td mat-cell *matCellDef="let element"> {{element.country_name}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   showFirstLastButtons
-                   aria-label="Select page of periodic elements">
-    </mat-paginator>
+  <div class="card-container">
+    <div *ngFor="let destination of destinations" style="margin-bottom: 2%;margin-top: 1%;">
+      <app-destination-card [destination]="destination"></app-destination-card>
+    </div>
   </div>
 </div>

@@ -88,7 +88,10 @@ public class UserController {
     }
 
     public void delete(Long id){
-       userService.delete(id);
+
+
+
+        userService.delete(id);
     }
 
     public void deleteByUsername(String username){

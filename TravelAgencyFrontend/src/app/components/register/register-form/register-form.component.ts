@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
 import { MaterialModule } from 'src/app/common/material/material.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-form',
@@ -28,7 +29,7 @@ export class RegisterFormComponent {
 
   hide = true;
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router,private userService:UserService) {
+  constructor(private cdr: ChangeDetectorRef, private router: Router,private userService:UserService,private snackBar:MatSnackBar) {
   }
   navigateToHome() {
     this.router.navigate(['home']);
@@ -55,6 +56,12 @@ export class RegisterFormComponent {
       this.userService.create(newUser).subscribe(
         (response) => {
           console.log('User created successfully:', response);
+          this.snackBar.open('Account created successfully!', 'Close', {
+            duration: 4000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          });
+          this.router.navigate(['login'])
         },
         (error) => {
           console.error('Error creating user:', error);

@@ -34,6 +34,8 @@ export class NavBarComponent implements OnInit{
 
   ngOnInit():void{
 
+    this.getUser();
+
     this.authService.userState.subscribe((result) => {
       this.roles=[]
       this.rolesObjects=[]
@@ -88,6 +90,28 @@ export class NavBarComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog is closed');
     });
+  }
+
+  getUser(){
+    const accessToken: any = localStorage.getItem('user');
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(accessToken);
+
+    if (decodedToken) {
+      this.userService.getByUsername(decodedToken.sub).subscribe(
+        (user: User) => {
+
+            this.userId=user?.id;
+            console.log("Usaoooo ",this.userId)
+
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+        }
+      );
+    } else {
+      console.error('Error decoding JWT token');
+    }
   }
 
 }
