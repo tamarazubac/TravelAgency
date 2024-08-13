@@ -1,8 +1,6 @@
+import { MaterialModule } from 'src/app/common/material/material.module';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { Arrangement } from 'src/app/models/arrangement';
 import { Rate } from 'src/app/models/rate';
@@ -11,13 +9,11 @@ import { RateService } from 'src/app/services/rate/rate.service';
 import { RateCardComponent } from '../rate-card/rate-card.component';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Role } from 'src/app/models/role';
-import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRateDialogComponent } from '../add-rate-dialog/add-rate-dialog.component';
 import { User } from 'src/app/models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from 'src/app/services/user/user.service';
-import { MatChipsModule } from '@angular/material/chips';
 import { CreateReservationDialogComponent } from '../create-reservation-dialog/create-reservation-dialog.component';
 
 
@@ -26,7 +22,7 @@ import { CreateReservationDialogComponent } from '../create-reservation-dialog/c
   templateUrl: './arrangement-details.component.html',
   styleUrls: ['./arrangement-details.component.css'],
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, RateCardComponent,MatChipsModule]
+  imports: [CommonModule, MaterialModule,RateCardComponent]
 })
 export class ArrangementDetailsComponent implements OnInit {
   arrangement: Arrangement;

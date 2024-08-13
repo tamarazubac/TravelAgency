@@ -1,25 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DestinationService } from 'src/app/services/destination/destination.service';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Destination } from 'src/app/models/destination';
 import { Arrangement } from 'src/app/models/arrangement';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
   standalone: true,
-  imports: [CommonModule,MatIconModule,MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, ReactiveFormsModule, MatButtonModule]
+  imports: [CommonModule,MaterialModule, ReactiveFormsModule]
 })
 export class SearchComponent implements OnInit {
   searchForm: FormGroup;

@@ -10,9 +10,9 @@
 .form-card {
   width: 600px;
   padding: 20px;
-  box-shadow: none; /* Remove box shadow */
-  border: none; /* Remove border */
-  background-color: transparent; /* Ensure background is transparent */
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
   margin-right: 40px;
 }
 

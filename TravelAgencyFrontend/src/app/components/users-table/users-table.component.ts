@@ -1,13 +1,7 @@
-import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from 'src/app/common/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit,ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -23,7 +17,7 @@ import { Component, Inject, OnInit } from '@angular/core';
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css'],
   standalone: true,
-  imports: [MatChipsModule,MatPaginatorModule, MatIconModule,MatTableModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, CommonModule, LayoutModule]
+  imports: [MaterialModule, CommonModule, LayoutModule]
 
 })
 export class UsersTableComponent {

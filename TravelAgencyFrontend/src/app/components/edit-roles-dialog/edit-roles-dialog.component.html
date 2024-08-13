@@ -1,9 +1,9 @@
 <div mat-dialog-content class="dialog-content">
-  <!-- User Info Section -->
-  <img [src]="'../../../assets/images/project-manager.png'" alt="User Image" class="user-image" />
+
+  <!-- <img [src]="'../../../assets/images/project-manager.png'" alt="User Image" class="user-image" /> -->
 
   <div class="user-info">
-    <!-- User Details -->
+
     <p>Username: {{ element.username }}</p>
     <p>First Name: {{ element.first_name }}</p>
     <p>Last Name: {{ element.last_name }}</p>
@@ -13,7 +13,6 @@
     <!-- <p>Current Roles: {{ currentRoles.join(', ') }}</p> -->
   </div>
 
-  <!-- Role Selection Form -->
   <form [formGroup]="rolesForm" class="role-form">
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>Assign New Roles</mat-label>

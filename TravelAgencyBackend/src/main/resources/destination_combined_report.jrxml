@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="DestinationReport"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="30"
+              bottomMargin="20"
+              uuid="e28d89b8-001a-4ecb-8792-6c0c41f5b2eb">
+
+    <!-- Parameters -->
+    <parameter name="REPORT_TITLE" class="java.lang.String"/>
+    <!-- <parameter name="COMPANY_LOGO" class="java.awt.Image"/> -->
+
+    <!-- Define Fields -->
+    <field name="cityName" class="java.lang.String"/>
+    <field name="countryName" class="java.lang.String"/>
+    <field name="totalPeople" class="java.lang.Integer"/>
+    <field name="totalReservations" class="java.lang.Integer"/>
+    <field name="totalRevenue" class="java.lang.Double"/>
+
+    <!-- Title Band -->
+    <title>
+        <band height="60">
+            <textField>
+                <reportElement x="120" y="20" width="400" height="30"/>
+                <textElement>
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$P{REPORT_TITLE}]]>
+                </textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <!-- Column Header Band -->
+    <columnHeader>
+        <band height="60">
+            <!-- Header Text -->
+            <staticText>
+                <reportElement x="0" y="0" width="150" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[City Name]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="150" y="0" width="150" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Country Name]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="300" y="0" width="80" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[People]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="380" y="0" width="80" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reservations]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="460" y="0" width="80" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total Revenue]]></text>
+            </staticText>
+
+            <!-- Header Lines -->
+            <line>
+                <reportElement x="0" y="20" width="555" height="1" forecolor="#000000"/>
+                <graphicElement>
+                    <pen lineWidth="0.8"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnHeader>
+
+    <!-- Detail Band -->
+    <detail>
+        <band height="30" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="150" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{cityName}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="150" y="0" width="150" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{countryName}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="300" y="0" width="80" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Integer">
+                    <![CDATA[$F{totalPeople}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="380" y="0" width="80" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Integer">
+                    <![CDATA[$F{totalReservations}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="460" y="0" width="80" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Double">
+                    <![CDATA[$F{totalRevenue}]]>
+                </textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- Page Footer -->
+    <pageFooter>
+        <band height="30">
+
+            <line>
+                <reportElement x="0" y="20" width="555" height="1" forecolor="#000000"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="20"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Generated by TimeForTravel System]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+</jasperReport>

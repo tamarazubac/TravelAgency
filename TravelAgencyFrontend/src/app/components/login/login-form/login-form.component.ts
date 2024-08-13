@@ -11,13 +11,14 @@ import { LogIn } from 'src/app/models/logIn';
 import { AuthenticationService } from '../../../services/authentication/authentication.service';
 import { AuthResponse } from 'src/app/models/authResponse';
 import { UserService } from 'src/app/services/user/user.service';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatSnackBarModule, ReactiveFormsModule]
+  imports: [MaterialModule, ReactiveFormsModule]
 })
 export class LoginFormComponent {
 

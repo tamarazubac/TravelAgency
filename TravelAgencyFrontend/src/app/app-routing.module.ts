@@ -9,17 +9,18 @@ import { ArrangementsTableComponent } from './components/arrangements-table/arra
 import { ArrangementDetailsComponent } from './components/arrangement-details/arrangement-details.component';
 import { DestinationsTableComponent } from './components/destinations-table/destinations-table.component';
 import { ReservationTableComponent } from './components/reservation-table/reservation-table.component';
+import { AuthGuard } from './common/utils/guard';
 
 const routes: Routes = [
   {component: RegisterFormComponent, path:"register"},
   {component:LoginFormComponent, path:"login"},
-  {component:UsersTableComponent,path:"allUsers"},
+  {component:UsersTableComponent,path:"allUsers", canActivate: [AuthGuard],data: { roles: ['ADMIN'] } },
   {component:HomeComponent,path:"home"},
-  {component:CreateArrangementComponent,path:"allArrangements/addArrangement"},
-  {component:ArrangementsTableComponent,path:"allArrangements"},
+  {component:CreateArrangementComponent,path:"allArrangements/addArrangement",canActivate: [AuthGuard],data: { roles: ['ADMIN','SALESMAN'] } },
+  {component:ArrangementsTableComponent,path:"allArrangements",canActivate: [AuthGuard],data: { roles: ['ADMIN','SALESMAN'] }},
   {component:ArrangementDetailsComponent,path:"arrangementsDetails/:id"},
-  {component:DestinationsTableComponent,path:"allDestinations"},
-  {component:ReservationTableComponent,path:"allReservations/:id/:type"}
+  {component:DestinationsTableComponent,path:"allDestinations",canActivate: [AuthGuard],data: { roles: ['ADMIN','SALESMAN'] }},
+  {component:ReservationTableComponent,path:"allReservations/:id/:type",canActivate: [AuthGuard],data: { roles: ['ADMIN','CUSTOMER','SALESMAN'] }}
 ];
 
 @NgModule({

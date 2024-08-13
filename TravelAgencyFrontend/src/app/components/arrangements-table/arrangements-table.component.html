@@ -9,7 +9,7 @@
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
-    <!-- Column Definitions -->
+
     <ng-container matColumnDef="DateFrom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date From</th>
       <td mat-cell *matCellDef="let element"> {{ element.date_from | date:'shortDate' }} </td>

@@ -26,6 +26,7 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Role } from 'src/app/models/role';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 
 @Component({
@@ -34,18 +35,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./update-arrangement-dialog.component.css'],
   standalone: true,
   imports: [
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatCardModule,
     ReactiveFormsModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatListModule,
+    MaterialModule,
     CommonModule,
     LayoutModule
   ]

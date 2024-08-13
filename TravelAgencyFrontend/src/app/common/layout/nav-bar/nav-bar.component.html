@@ -1,22 +1,69 @@
-<mat-toolbar>
-  <!-- <span [routerLink]="['home']" >TimeForTravel</span> -->
-   <img src="../../../assets/images/timefortravel-high-resolution-logo.png"/>
-  <div>
-    <button style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary" [routerLink]="['home']">
-      <mat-icon>home</mat-icon>
-      Home
-    </button>
-    <button *ngIf="roles.includes('UNAUTHENTICATED')" [routerLink]="['register']" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>how_to_reg</mat-icon>Register</button>
-    <button *ngIf="roles.includes('ADMIN')" [routerLink]="['/allReservations', userId,'all']" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>book</mat-icon>All reservations</button>
-    <button *ngIf="roles.includes('CUSTOMER')" [routerLink]="['/allReservations', userId,'user']" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>book</mat-icon>My reservations</button>
-    <button *ngIf="roles.includes('UNAUTHENTICATED')" [routerLink]="['login']" style="float: right; background-color: #3d9bf9; color: white;font-weight: 300;" mat-raised-button color="primary"><mat-icon>login</mat-icon>Log In</button>
-    <button *ngIf="roles.includes('ADMIN')" [routerLink]="['allUsers']" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>group</mat-icon>All users</button>
-    <button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" [routerLink]="['allDestinations']" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>location_city</mat-icon>All destinations</button>
-    <!-- <button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" (click)="addDestination()" style="float: right; background-color: #3d9bf9; color: white;" mat-raised-button color="primary"><mat-icon>add_location_alt</mat-icon>Add destination</button> -->
-    <!-- <button  *ngIf="roles.includes('SALESMAN')"  [routerLink]="['addArrangement']" style="float: right; background-color: #3d9bf9; color: white;" mat-raised-button color="primary"><mat-icon>travel_explore</mat-icon>Add arrangement</button> -->
-    <button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')"  [routerLink]="['allArrangements']" style="float: right; background-color: #3d9bf9; color: white;font-weight: 300;" mat-raised-button color="primary"><mat-icon>explore</mat-icon>All arrangements</button>
-    <button *ngIf="!roles.includes('UNAUTHENTICATED')" [routerLink]="['home']" (click)="logout()" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>logout</mat-icon>Log out</button>
-    <button  (click)="downloadReport()" style="float: right; background-color: #3d9bf9; color: white; font-weight: 300;" mat-raised-button color="primary"><mat-icon>report</mat-icon>Report - users</button>
+<mat-toolbar color="primary" class="toolbar">
+  <!-- <img src="../../../assets/images/timefortravel-high-resolution-logo.png" alt="Logo" class="logo"/> -->
 
-  </div>
+  <div class="toolbar-spacer"></div>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadReportDestination()">
+      <mat-icon>location_city</mat-icon>
+      Destination Report
+    </button>
+    <button mat-menu-item (click)="downloadBalanceReport()">
+      <mat-icon>account_balance_wallet</mat-icon>
+      Balance Report
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu"  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')"  style="width: 110px;font-size:16px;">
+    <mat-icon style="margin-right: 5px;">report</mat-icon>
+    Reports
+  </button>
+
+  <button *ngIf="roles.includes('ADMIN')" mat-icon-button [routerLink]="['allUsers']">
+    <mat-icon>group</mat-icon>
+  </button>
+
+  <button *ngIf="roles.includes('UNAUTHENTICATED')" mat-icon-button [routerLink]="['register']" class="auth-button">
+    Register
+  </button>
+
+  <mat-menu #reservationsMenu="matMenu">
+    <button mat-menu-item  *ngIf="roles.includes('ADMIN')" [routerLink]="['/allReservations', userId, 'all']">
+      <mat-icon>book</mat-icon>
+      All Reservations
+    </button>
+    <button mat-menu-item *ngIf="roles.includes('CUSTOMER')" [routerLink]="['/allReservations', userId, 'user']">
+      <mat-icon>book</mat-icon>
+      My Reservations
+    </button>
+  </mat-menu>
+
+  <button  mat-icon-button [matMenuTriggerFor]="reservationsMenu"  *ngIf="roles.includes('CUSTOMER') || roles.includes('ADMIN')" style="width: 150px;font-size:16px;">
+    <mat-icon>book</mat-icon>
+    <span class="button-text">Reservations</span>
+  </button>
+
+  <button *ngIf="roles.includes('UNAUTHENTICATED')" mat-icon-button [routerLink]="['login']" class="auth-button">
+    Log In
+  </button>
+
+  <button *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" mat-icon-button [routerLink]="['allDestinations']" style="width: 140px; font-size: 16px;">
+    <mat-icon style="margin-right: 5px;">location_city</mat-icon>
+    Destinations
+  </button>
+
+  <button *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" mat-icon-button [routerLink]="['allArrangements']" style="width: 150px; font-size: 16px;">
+    <mat-icon style="margin-right: 5px;">explore</mat-icon>
+    Arrangements
+  </button>
+
+  <button mat-icon-button [routerLink]="['home']">
+    <mat-icon>home</mat-icon>
+  </button>
+
+
+  <button *ngIf="!roles.includes('UNAUTHENTICATED')" mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
+

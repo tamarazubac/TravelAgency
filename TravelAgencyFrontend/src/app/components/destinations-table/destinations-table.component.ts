@@ -13,14 +13,9 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/services/user/user.service';
-import { EditRolesDialogComponent } from '../edit-roles-dialog/edit-roles-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Arrangement } from 'src/app/models/arrangement';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
-import { UpdateArrangementDialogComponent } from '../update-arrangement-dialog/update-arrangement-dialog.component';
 import { Role } from 'src/app/models/role';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Destination } from 'src/app/models/destination';
@@ -31,7 +26,7 @@ import { CreateDestinationDialogComponent } from '../create-destination-dialog/c
   templateUrl: './destinations-table.component.html',
   styleUrls: ['./destinations-table.component.css'],
   standalone:true,
-  imports: [RouterModule,MatDatepickerModule,MatChipsModule,MatPaginatorModule, MatIconModule,MatTableModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, CommonModule, LayoutModule]
+  imports: [RouterModule, MaterialModule, CommonModule, LayoutModule]
 
 })
 export class DestinationsTableComponent implements OnInit{
@@ -105,9 +100,10 @@ export class DestinationsTableComponent implements OnInit{
     });
 
 
-    // dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllDestinations();
 
-    // });
+    });
 
 
   }

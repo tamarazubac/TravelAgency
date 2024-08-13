@@ -19,13 +19,14 @@ import { MatListModule } from '@angular/material/list';
 import { LayoutModule } from 'src/app/common/layout/layout.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reservation } from 'src/app/models/reservation';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-edit-reservation',
   templateUrl: './edit-reservation.component.html',
   styleUrls: ['./edit-reservation.component.css'],
   standalone:true,
-  imports: [MatDatepickerModule,MatNativeDateModule,MatCardModule,ReactiveFormsModule,MatOptionModule,MatSelectModule,MatChipsModule,MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, CommonModule, LayoutModule]
+  imports: [ReactiveFormsModule, MaterialModule, CommonModule, LayoutModule]
 
 })
 export class EditReservationComponent implements OnInit{

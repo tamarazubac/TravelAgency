@@ -12,9 +12,9 @@
 
 .header-image {
   display: block;
-  margin: 0 auto; /* Centers the image horizontally */
+  margin: 0 auto;
   width: 50%;
-  height: auto; /* Maintain aspect ratio */
+  height: auto;
 }
 
 .form-table {

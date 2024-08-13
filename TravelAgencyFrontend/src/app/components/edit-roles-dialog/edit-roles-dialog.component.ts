@@ -17,6 +17,7 @@ import { LayoutModule } from 'src/app/common/layout/layout.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './edit-roles-dialog.component.html',
   styleUrls: ['./edit-roles-dialog.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule,MatOptionModule,MatSelectModule,MatChipsModule,MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, CommonModule, LayoutModule]
+  imports: [ReactiveFormsModule,MaterialModule, CommonModule, LayoutModule]
 
 })
 export class EditRolesDialogComponent implements OnInit {

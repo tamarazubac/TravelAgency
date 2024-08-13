@@ -16,6 +16,7 @@ import { SearchComponent } from "./components/search/search.component";
   declarations: [
     AppComponent,
     HomeComponent,
+
   ],
   imports: [
     BrowserModule,

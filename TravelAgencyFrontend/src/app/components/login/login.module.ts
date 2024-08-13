@@ -5,13 +5,11 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import { LoginFormComponent } from './login-form/login-form.component';
-import { HomeComponent } from '../../common/layout/home/home.component';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    HomeComponent,
     LoginFormComponent,
     LogInModule,
     Router

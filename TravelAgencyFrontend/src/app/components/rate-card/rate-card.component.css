@@ -30,13 +30,13 @@
 
 .star {
   font-size: 24px;
-  color: #ddd; /* Default star color */
+  color: #ddd;
 }
 
 .star.filled {
-  color: #ffeb3b; /* Yellow color for filled stars */
+  color: #ffeb3b;
 }
 
 .star.unfilled {
-  color: #ddd; /* Default color for unfilled stars */
+  color: #ddd;
 }
