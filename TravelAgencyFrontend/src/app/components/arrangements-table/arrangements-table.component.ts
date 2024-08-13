@@ -13,6 +13,8 @@ import { ArrangementService } from 'src/app/services/arrangement/arrangement.ser
 import { UpdateArrangementDialogComponent } from '../update-arrangement-dialog/update-arrangement-dialog.component';
 import { Role } from 'src/app/models/role';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-arrangements-table',
@@ -25,7 +27,7 @@ export class ArrangementsTableComponent implements OnInit{
 
   arrangements: Arrangement[]
   dataSource:MatTableDataSource<Arrangement>;
-  displayedColumns: string[] = ['DateFrom','DateTo','FreeSeats','PricePerPerson','Destination','actions-edit','actions-reservations'];
+  displayedColumns: string[] = ['DateFrom','DateTo','FreeSeats','PricePerPerson','Destination','actions-edit','actions-reservations','actions-delete'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,7 +38,8 @@ export class ArrangementsTableComponent implements OnInit{
   constructor(private arrangementService:ArrangementService,
     private dialog:MatDialog,
     private router:ActivatedRoute,
-    private authService:AuthenticationService){
+    private authService:AuthenticationService,
+    private snackBar:MatSnackBar){
   }
 
   ngOnInit(): void {
@@ -92,6 +95,36 @@ export class ArrangementsTableComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       this.getAllArrangements();
     });
+  }
+
+
+  openDeleteDialog(itemId: number, itemName: string): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { itemType: 'Arrangement', itemId, itemName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(itemId);
+      }
+    });
+  }
+
+  delete(id:number):void{
+
+    this.arrangementService.delete(id).subscribe({
+      next: () => {
+        console.log(`Arrangement with id ${id} deleted successfully`);
+        this.snackBar.open('Arrangement deleted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+      },
+      error: (err) => {
+        console.error('Failed to delete arrangement', err);
+      }
+    });
+
   }
 
 }

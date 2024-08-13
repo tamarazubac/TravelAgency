@@ -12,6 +12,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Reservation } from 'src/app/models/reservation';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 
 @Component({
@@ -127,6 +128,20 @@ export class ReservationTableComponent {
     });
 
   }
+
+
+  openDeleteDialog(reservationId: number, reservationName: string): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { itemType: 'Reservation', itemId: reservationId, itemName: reservationName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(reservationId);
+      }
+    });
+  }
+
   delete(id: number) {
     this.reservationService.delete(id).subscribe(
       () => {
@@ -145,6 +160,10 @@ export class ReservationTableComponent {
         });
       }
     );
+  }
+
+  isFutureDate(date: string): boolean {
+    return new Date(date) > new Date();
   }
 
 }

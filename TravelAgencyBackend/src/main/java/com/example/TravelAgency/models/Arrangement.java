@@ -25,11 +25,11 @@ public class Arrangement {
     public int freeSeats;
     public double pricePerPerson;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
     public Destination destination;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public User owner;
 

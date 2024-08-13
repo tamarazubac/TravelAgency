@@ -1,6 +1,7 @@
 .custom-card {
   width: 100%;
   margin-bottom: 30px;
+  margin:15px;
 }
 
 .custom-card img {
@@ -53,4 +54,9 @@ p {
 
 *{
   padding: 2px;
+}
+
+.outdated-card {
+  /* background-color: #f6e7e7; */
+  border: 1px solid #ec8585;
 }

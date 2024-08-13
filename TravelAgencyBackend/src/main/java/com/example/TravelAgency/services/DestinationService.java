@@ -21,7 +21,7 @@ public class DestinationService implements IDestinationService {
     @Autowired
     public IDestinationRepository destinationRepository;
 
-    private final String IMAGE_DIR = "images/";
+    private final String IMAGE_DIR = "src/main/resources/images/";
     @Override
     public Optional<Destination> findById(Long id) {
         return destinationRepository.findById(id);

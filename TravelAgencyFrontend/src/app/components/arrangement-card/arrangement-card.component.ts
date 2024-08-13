@@ -47,4 +47,12 @@ export class ArrangementCardComponent implements OnInit{
       });
     }
   }
+
+  isOutdated(): boolean {
+    if (this.arrangement && this.arrangement.date_from) {
+      const today = new Date();
+      return new Date(this.arrangement.date_from) < today;
+    }
+    return false;
+  }
 }

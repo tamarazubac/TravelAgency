@@ -91,27 +91,38 @@ public class RestDestinationController {
     public ResponseEntity<List<String>> getImages(@PathVariable Long id) {
         List<String> imageNames = destinationController.getImages(id);
         List<String> imageUrls = imageNames.stream()
-                .map(name -> MvcUriComponentsBuilder.fromMethodName(RestDestinationController.class, "serveFile", name).build().toUriString())
+                .map(name -> MvcUriComponentsBuilder
+                        .fromMethodName(RestDestinationController.class, "serveFile", name)
+                        .build()
+                        .toUriString())
                 .collect(Collectors.toList());
         return new ResponseEntity<>(imageUrls, HttpStatus.OK);
     }
+
 
     @GetMapping("/images/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         try {
-            Path file = Paths.get(imageUploadDir).resolve(filename);
+            // Resolve the file path
+            Path file = Paths.get(imageUploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
+
+            // Check if the file exists and is readable
+            if (resource.exists() && resource.isReadable()) {
+                // Return the file with its content type
                 return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(file))
+                        .contentType(MediaType.parseMediaType(Files.probeContentType(file)))
                         .body(resource);
             } else {
+                // File not found or not readable
                 return ResponseEntity.notFound().build();
             }
         } catch (MalformedURLException e) {
+            // Handle malformed URL exception
             return ResponseEntity.notFound().build();
         } catch (IOException e) {
+            // Handle I/O exception
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

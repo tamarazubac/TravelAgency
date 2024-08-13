@@ -240,4 +240,13 @@ export class ArrangementDetailsComponent implements OnInit {
       });
     }
   }
+
+
+  isFutureDate(): boolean {
+    if (this.arrangement && this.arrangement.date_from) {
+      const today = new Date();
+      return new Date(this.arrangement.date_from) > today;
+    }
+    return false;
+  }
 }

@@ -29,6 +29,5 @@ public interface IReservationRepository extends JpaRepository<Reservation,Long> 
     @Query("SELECT r FROM Reservation r WHERE r.arrangement.dateFrom BETWEEN :startDate AND :endDate")
     List<Reservation> findByReservationDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
-
     void deleteByArrangementId(Long id);
 }
