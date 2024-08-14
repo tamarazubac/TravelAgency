@@ -12,6 +12,7 @@ import { AuthenticationService } from '../../../services/authentication/authenti
 import { AuthResponse } from 'src/app/models/authResponse';
 import { UserService } from 'src/app/services/user/user.service';
 import { MaterialModule } from 'src/app/common/material/material.module';
+import { SocketApiService } from 'src/app/services/sockets/socket-api.service';
 
 @Component({
   selector: 'app-login-form',
@@ -26,7 +27,8 @@ export class LoginFormComponent {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private socketApiService:SocketApiService
   ) {}
 
   hide = true;
@@ -48,7 +50,14 @@ export class LoginFormComponent {
       this.authenticationService.login(loginCredentials).subscribe({
         next: (response: AuthResponse) => {
           localStorage.setItem('user', response.accessToken);  // saving token in local storage
+
+          this.authenticationService.initUser();
           this.authenticationService.setUser();
+
+
+
+          this.socketApiService.openSocket(loginCredentials.username);
+
           this.router.navigate(['home']);
         },
         error: (err) => {

@@ -1,14 +1,17 @@
 package com.example.TravelAgency.services;
 
+import com.example.TravelAgency.dtos.NotificationDTO;
 import com.example.TravelAgency.models.Arrangement;
 import com.example.TravelAgency.models.Reservation;
 import com.example.TravelAgency.repositories.IArrangementRepository;
 import com.example.TravelAgency.repositories.IReservationRepository;
 import com.example.TravelAgency.services.interfaces.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,9 @@ public class ReservationService implements IReservationService {
     public IReservationRepository reservationRepository;
     @Autowired
     IArrangementRepository arrangementRepository;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
     @Override
     public List<Reservation> findAll() {
         return reservationRepository.findAll();
@@ -53,6 +59,16 @@ public class ReservationService implements IReservationService {
             arrangement.get().setFreeSeats(currentFreeSeats- newReservation.numberOfPeople);
             arrangementRepository.saveAndFlush(arrangement.get());
         }
+
+        NotificationDTO not=new NotificationDTO();
+        not.setUsername(arrangement.get().owner.username);
+        not.setType("RESERVATION_CREATED");
+        not.setTime(LocalDateTime.now());
+        not.setContent("Created reservation for your arrangement on destination: "+arrangement.get().destination.countryName.toUpperCase()+", "+arrangement.get().destination.cityName.toUpperCase()+ "  by customer "+newReservation.user.username+"!");
+
+
+        this.simpMessagingTemplate.convertAndSend( "/socket-publisher/"+arrangement.get().owner.username,not);
+        System.out.println("Putanjaaaa  : "+"/socket-publisher/"+arrangement.get().owner.username);
 
         return Optional.of(reservationRepository.save(newReservation));
     }

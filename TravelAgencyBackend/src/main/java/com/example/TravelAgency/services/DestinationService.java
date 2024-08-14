@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -116,6 +117,22 @@ public class DestinationService implements IDestinationService {
     public List<String> getImages(Long destinationId) {
         Optional<Destination> destinationOpt = destinationRepository.findById(destinationId);
         return destinationOpt.map(Destination::getImagePaths).orElse(Collections.emptyList());
+    }
+
+    public void deleteImage(Long destinationId, String filename) throws IOException {
+        Optional<Destination> destinationOpt = destinationRepository.findById(destinationId);
+
+        if (destinationOpt.isPresent()) {
+            Destination destination = destinationOpt.get();
+
+            destination.getImagePaths().remove(filename);
+            destinationRepository.save(destination);
+
+            Path filePath = Paths.get(IMAGE_DIR).resolve(filename).normalize();  //deleting from file system
+            Files.deleteIfExists(filePath);
+        } else {
+            throw new FileNotFoundException("Destination not found with id: " + destinationId);
+        }
     }
 
 }

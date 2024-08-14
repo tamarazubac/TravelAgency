@@ -12,6 +12,7 @@ import { DestinationService } from 'src/app/services/destination/destination.ser
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { EditDestinationDialogComponent } from '../edit-destination-dialog/edit-destination-dialog.component';
 
 
 
@@ -77,6 +78,21 @@ export class DestinationCardComponent {
       }
     });
   }
+
+  openEditDialog(destination:Destination): void {
+    const dialogRef = this.dialog.open(EditDestinationDialogComponent, {
+      data: { destination },
+      minHeight:'600px',
+      minWidth:'700px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+        this.loadImages();
+
+    });
+  }
+
 
   delete(id:number):void{
 

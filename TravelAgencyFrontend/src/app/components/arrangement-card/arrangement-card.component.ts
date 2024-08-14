@@ -39,7 +39,7 @@ export class ArrangementCardComponent implements OnInit{
       this.destinationService.getImages(this.arrangement.destination.id).subscribe({
         next: (data: string[]) => {
           this.images = data;
-          console.log('Images loaded:', this.images);
+          // console.log('Images loaded:', this.images);
         },
         error: (err) => {
           console.error('Error loading images:', err);
