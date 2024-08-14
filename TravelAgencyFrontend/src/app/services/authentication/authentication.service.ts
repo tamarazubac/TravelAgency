@@ -70,7 +70,7 @@ export class AuthenticationService {
   }
 
 
-  private initUser(): void {
+  initUser(): void {
     const accessToken: any = localStorage.getItem('user');
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(accessToken);

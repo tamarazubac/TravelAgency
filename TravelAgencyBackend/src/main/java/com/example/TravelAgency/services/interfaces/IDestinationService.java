@@ -18,6 +18,8 @@ public interface IDestinationService {
 
     void delete(Long id);
 
-    public void uploadImage(Long destinationId, MultipartFile file) throws IOException;
-    public List<String> getImages(Long destinationId);
+    void uploadImage(Long destinationId, MultipartFile file) throws IOException;
+    List<String> getImages(Long destinationId);
+
+    void deleteImage(Long id,String fileName) throws IOException;
 }

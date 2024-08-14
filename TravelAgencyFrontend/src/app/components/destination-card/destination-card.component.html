@@ -2,6 +2,9 @@
   <mat-card-content>
     <div class="header-container">
       <h2 class="title" style="font-weight: 300;">{{ destination.city_name }}, {{ destination.country_name }}</h2>
+      <button mat-icon-button color="primary" (click)="openEditDialog(destination)" style="margin-left: 100px;">
+        <mat-icon>edit</mat-icon>
+      </button>
       <button mat-icon-button color="accent" (click)="openDeleteDialog(destination.id,'')" >
         <mat-icon>delete</mat-icon>
       </button>

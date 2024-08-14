@@ -84,4 +84,8 @@ public class DestinationController {
         return destinationService.getImages(id);
     }
 
+    public void deleteImage(Long id,String fileName) throws IOException{
+        destinationService.deleteImage(id,fileName);
+    }
+
 }

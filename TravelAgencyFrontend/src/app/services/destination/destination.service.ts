@@ -35,5 +35,10 @@ export class DestinationService {
     return this.httpClient.delete<void>(url);
   }
 
+  deleteImage(destinationId: number|undefined, filename: string): Observable<void> {
+    const url = `${environment.apiHost}destinations/${destinationId}/images/${filename}`;
+    return this.httpClient.delete<void>(url);
+  }
+
 
 }
