@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Arrangement } from 'src/app/models/arrangement';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
-import { ReactiveFormsModule} from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
 import { Role } from 'src/app/models/role';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -24,6 +22,8 @@ export class HomeComponent implements OnInit {
   rolesObjects:Role[]=[];
   userId:number;
 
+  noResultMessage:string;
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -33,40 +33,46 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const reloaded = localStorage.getItem('reloaded');
-
     this.getUser();
 
     this.authService.userState.subscribe((result) => {
-      this.roles=[]
-      this.rolesObjects=[]
-      if(result && result != null){
-        this.rolesObjects=result.roles;
+      this.roles = [];
+      this.rolesObjects = [];
+
+      if (result && result != null) {
+        this.rolesObjects = result.roles;
         this.roles = this.rolesObjects.map(role => role.roleName);
 
-        if(this.roles.includes('UNAUTHENTICATED')){
+        if (this.roles.includes('UNAUTHENTICATED')) {
           this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
         }
-
-      }
-      else{
-        this.rolesObjects.push({ roleName:"UNAUTHENTICATED" });
-        this.roles=[];
+      } else {
+        this.rolesObjects.push({ roleName: "UNAUTHENTICATED" });
+        this.roles = [];
         this.roles = this.rolesObjects.map(role => role.roleName);
       }
-    })
 
-    // if (!reloaded) {
-    //   localStorage.setItem('reloaded', 'true');
-    //   location.reload();
-    // } else {
-    //   localStorage.removeItem('reloaded');
-    // }
+      this.getArrangements();
 
+    });
+  }
+
+
+  getArrangements(){
     this.arrangementService.getAll().subscribe({
       next: (data: Arrangement[]) => {
         this.arrangementList = data;
-        // console.log("Arrangements:", this.arrangementList);
+
+        if (this.roles.includes('UNAUTHENTICATED') || this.roles.includes('CUSTOMER') ) {
+          const currentDate = new Date();
+          this.arrangementList = this.arrangementList.filter(arrangement =>
+            new Date(arrangement.date_to) > currentDate
+          );
+        }
+
+        if (this.arrangementList.length === 0) {
+          this.noResultMessage = "No arrangements available in the future.";
+        }
       },
       error: (_) => {
         console.log("Error!");
@@ -76,7 +82,12 @@ export class HomeComponent implements OnInit {
 
   onSearch(arrangements: Arrangement[]): void {
     this.arrangementList = arrangements;
-  }
+    if (arrangements.length === 0) {
+        this.noResultMessage = "There are no arrangements corresponding to the search criteria.";
+    } else {
+        this.noResultMessage = "";
+    }
+}
 
   getUser(){
     const accessToken: any = localStorage.getItem('user');

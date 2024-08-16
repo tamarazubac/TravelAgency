@@ -3,11 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MaterialModule } from 'src/app/common/material/material.module';
 import { Rate } from 'src/app/models/rate';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { RateService } from 'src/app/services/rate/rate.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Role } from 'src/app/models/role';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-rate-card',
@@ -19,12 +20,22 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class RateCardComponent implements OnInit{
   @Input() rate:Rate;
 
+  isWrittenByCustomer:boolean=false;
+
   constructor(private dialog:MatDialog,
               private rateService:RateService,
               private snackBar:MatSnackBar,
               private authService:AuthenticationService
   ){}
   ngOnInit():void{
+
+    const accessToken: any = localStorage.getItem('user');
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(accessToken);
+
+      if (decodedToken.sub==this.rate.user.username) {
+        this.isWrittenByCustomer=true;
+      }
 
     this.authService.userState.subscribe((result) => {
       this.roles=[]
@@ -44,6 +55,9 @@ export class RateCardComponent implements OnInit{
         this.roles = this.rolesObjects.map(role => role.roleName);
       }
     })
+
+
+
   }
 
 

@@ -1,0 +1,40 @@
+* {
+  font-size: medium;
+  font-weight: 300;
+}
+
+.button-container {
+  margin: 10px;
+  text-align: center;
+}
+
+.register-header {
+  color: #007bff;
+  font-size: 24px;
+  margin-bottom: 3%;
+  margin-top: 5%;
+}
+
+.form-field-container {
+  display: inline-block;
+  text-align: left;
+}
+
+mat-form-field {
+  display: block;
+  width: 400px;
+  margin-bottom: 16px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.button-container #saveButton:disabled {
+  background-color: #b0b0b0;
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

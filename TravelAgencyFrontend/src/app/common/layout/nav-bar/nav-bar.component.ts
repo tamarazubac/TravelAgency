@@ -1,15 +1,11 @@
-import { STRING_TYPE } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { CreateDestinationDialogComponent } from 'src/app/components/create-destination-dialog/create-destination-dialog.component';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { ReportService } from 'src/app/services/reports/report.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { MaterialModule } from '../../material/material.module';
-import { MatMenuModule } from '@angular/material/menu';
 import { DateRangeDialogComponent } from 'src/app/components/date-range-dialog/date-range-dialog.component';
 import { Router } from '@angular/router';
 
@@ -25,28 +21,30 @@ export class NavBarComponent implements OnInit{
 
   userId:number|undefined;
 
+  username:string;
+
   constructor(private authService:AuthenticationService,
-    private dialog:MatDialog,
-    private userService:UserService,
-    private reportService : ReportService,
-    private router: Router){}
+              private dialog:MatDialog,
+              private userService:UserService,
+              private reportService : ReportService,
+              private router: Router){}
 
 
   ngOnInit():void{
 
-    this.getUser();
+    this.getUser();  //need id for redirecting on myReservations - for customers
 
     this.authService.userState.subscribe((result) => {
       this.roles=[]
       this.rolesObjects=[]
       if(result && result != null){
+
         this.rolesObjects=result.roles;
         this.roles = this.rolesObjects.map(role => role.roleName);
 
         if(this.roles.includes('UNAUTHENTICATED')){
           this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
         }
-
       }
       else{
         this.rolesObjects.push({ roleName:"UNAUTHENTICATED" });
@@ -74,7 +72,6 @@ export class NavBarComponent implements OnInit{
       link.download = 'DestinationReport.pdf';
       link.click();
 
-
       window.URL.revokeObjectURL(url);
     }, error => {
       console.error('Error downloading the report', error);
@@ -100,10 +97,8 @@ export class NavBarComponent implements OnInit{
     if (decodedToken) {
       this.userService.getByUsername(decodedToken.sub).subscribe(
         (user: User) => {
-
             this.userId=user?.id;
-            console.log("Usaoooo ",this.userId)
-
+            this.username=user.username;
         },
         (error) => {
           console.error('Error fetching user details:', error);
@@ -116,7 +111,6 @@ export class NavBarComponent implements OnInit{
 
   isLoggedIn():boolean{
     return this.authService.isLoggedIn();
-
   }
 
 }

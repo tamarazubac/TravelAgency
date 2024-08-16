@@ -1,32 +1,16 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Destination } from 'src/app/models/destination';
 import { User } from 'src/app/models/user';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Role } from 'src/app/models/role';
-import { RoleService } from 'src/app/services/role/role.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from 'src/app/common/layout/layout.module';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { DestinationService } from 'src/app/services/destination/destination.service';
 import { Arrangement } from 'src/app/models/arrangement';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
-
-
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 
 @Component({
@@ -34,7 +18,7 @@ import { ArrangementService } from 'src/app/services/arrangement/arrangement.ser
   templateUrl: './create-arrangement.component.html',
   styleUrls: ['./create-arrangement.component.css'],
   standalone: true,
-  imports: [MatDatepickerModule,MatNativeDateModule,MatCardModule,ReactiveFormsModule,MatOptionModule,MatSelectModule,MatChipsModule,MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, CommonModule, LayoutModule]
+  imports: [ReactiveFormsModule, MaterialModule, CommonModule, LayoutModule]
 })
 export class CreateArrangementComponent {
   arrangementForm: FormGroup;
@@ -66,11 +50,6 @@ export class CreateArrangementComponent {
   loadDestinations(): void {
     this.destinationService.getAll().subscribe((data: Destination[]) => {
       this.destinations = data;
-      console.log("Destinations : ",this.destinations)
-
-      // this.destinations.forEach(destination => {
-      //   console.log(`Destination ID: ${destination.id}, City: ${destination.city_name}, Country: ${destination.country_name}`);
-      // });
     });
   }
 
@@ -88,8 +67,6 @@ export class CreateArrangementComponent {
         owner: formValue.owner
       };
 
-      console.log('Arrangement:', newArrangement);
-
       this.arrangementService.create(newArrangement).subscribe(
         (response: Arrangement) => {
           console.log('Arrangement created successfully:', response);
@@ -102,8 +79,6 @@ export class CreateArrangementComponent {
           console.error('Error creating arrangement:', error);
         }
       );
-
-
     }
   }
 
@@ -132,19 +107,5 @@ export class CreateArrangementComponent {
       }
     );
   }
-
-
-
-  // getUsersByRole(roleName: string): void {
-  //   this.userService.getUsersByRole(roleName).subscribe(
-  //     (users: User[]) => {
-  //       console.log(roleName +": "+users)
-  //       this.users = this.users.concat(users);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching users by role', error);
-  //     }
-  //   );
-  // }
 
 }

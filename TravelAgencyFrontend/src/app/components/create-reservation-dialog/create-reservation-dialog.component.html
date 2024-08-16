@@ -50,7 +50,7 @@
         </div>
         <div class="button-container">
           <button mat-raised-button color="accent" (click)="onCancel()" class="cancel-button"><mat-icon>cancel</mat-icon>Cancel</button>
-          <button mat-raised-button color="primary" (click)="onSubmit()" class="submit-button"><mat-icon>post_add</mat-icon>Submit</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" class="submit-button"  [disabled]="isSubmitDisabled"><mat-icon>post_add</mat-icon>Submit</button>
         </div>
       </form>
     </mat-card-content>

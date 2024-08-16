@@ -1,29 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from 'src/app/common/layout/layout.module';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-
 import { Arrangement } from 'src/app/models/arrangement';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
 import { Destination } from 'src/app/models/destination';
 import { DestinationService } from 'src/app/services/destination/destination.service';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { Role } from 'src/app/models/role';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MaterialModule } from 'src/app/common/material/material.module';
@@ -49,6 +36,8 @@ export class UpdateArrangementDialogComponent implements OnInit {
   edit:boolean=true;  //disabled
 
   admin:boolean;
+
+  @Output() arrangementUpdated = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -166,6 +155,7 @@ export class UpdateArrangementDialogComponent implements OnInit {
         (response: Arrangement) => {
           console.log('Arrangement updated successfully:', response);
           this.dialogRef.close(response);
+          this.arrangementUpdated.emit();
         },
         (error) => {
           console.error('Error updating arrangement:', error);

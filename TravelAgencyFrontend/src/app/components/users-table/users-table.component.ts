@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-users-table',
@@ -28,6 +29,8 @@ export class UsersTableComponent {
   dataSource:MatTableDataSource<User>;
   displayedColumns: string[] = ['Name', 'Username','Roles','Phone number','actions-edit','actions-delete'];
 
+  userId:number|undefined;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -36,13 +39,15 @@ export class UsersTableComponent {
   }
 
   ngOnInit(): void {
+    this.getUser();
+
    this.getAllUsers();
   }
 
   getAllUsers(){
     this.service.getAll().subscribe({
       next: (data: User[]) => {
-        this.users = data
+        this.users = data.filter(user => user.id !== this.userId);
         this.dataSource = new MatTableDataSource<User>(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -99,6 +104,28 @@ export class UsersTableComponent {
     });
 
   }
+
+  getUser(){
+    const accessToken: any = localStorage.getItem('user');
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(accessToken);
+
+    if (decodedToken) {
+      this.service.getByUsername(decodedToken.sub).subscribe(
+        (user: User) => {
+            this.userId=user?.id;
+        },
+        (error) => {
+          console.error('Error fetching user details:', error);
+        }
+      );
+    } else {
+      console.error('Error decoding JWT token');
+    }
+  }
+
+
+
 
 
 }

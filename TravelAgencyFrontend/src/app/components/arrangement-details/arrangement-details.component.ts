@@ -16,6 +16,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from 'src/app/services/user/user.service';
 import { CreateReservationDialogComponent } from '../create-reservation-dialog/create-reservation-dialog.component';
 import { DestinationService } from 'src/app/services/destination/destination.service';
+import { ReservationService } from 'src/app/services/reservation/reservation.service';
 
 
 @Component({
@@ -34,7 +35,6 @@ export class ArrangementDetailsComponent implements OnInit {
   averageRating: number = 0;
   stars: number[] = [1, 2, 3, 4, 5];
 
-
   rolesObjects:Role[]=[];
   roles:string[]=[]
 
@@ -42,16 +42,9 @@ export class ArrangementDetailsComponent implements OnInit {
   partiallyFilledStar: boolean = false;
   unfilledStars: number = 0;
 
-  // Define static images
-  // images: string[] = [
-  //   "../../../assets/images/nice.jpg",
-  //   "../../../assets/images/ven.jpg",
-  //   "../../../assets/images/ljorent.jpg"
-  // ];
-
   images: string[] = [];
 
-
+  isCustomerWithPastReservation: boolean = false;
 
   constructor(
     private arrangementService: ArrangementService,
@@ -60,12 +53,14 @@ export class ArrangementDetailsComponent implements OnInit {
     private userService:UserService,
     private route: ActivatedRoute,
     private dialog:MatDialog,
-    private destinationService:DestinationService
+    private destinationService:DestinationService,
+    private reservationService:ReservationService
 
   ) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
+
     this.arrangementService.findById(id).subscribe({
       next: (data: Arrangement) => {
         this.arrangement = data;
@@ -80,7 +75,7 @@ export class ArrangementDetailsComponent implements OnInit {
       }
     });
 
-    this.authService.userState.subscribe((result) => {
+    this.authService.userState.subscribe((result) => {  //checking users roles
       this.roles=[]
       this.rolesObjects=[]
       if(result &&
@@ -97,7 +92,9 @@ export class ArrangementDetailsComponent implements OnInit {
         this.roles=[];
         this.roles = this.rolesObjects.map(role => role.roleName);
       }
+
     })
+
   }
 
   prevImage(): void {
@@ -181,8 +178,9 @@ export class ArrangementDetailsComponent implements OnInit {
     if (decodedToken) {
       this.userService.getByUsername(decodedToken.sub).subscribe(
         (user: User) => {
-          if (user) {
+          if (user && user.id) {
             this.user=user
+            this.checkCustomerPastReservation(user.id);
           }
         },
         (error) => {
@@ -216,7 +214,7 @@ export class ArrangementDetailsComponent implements OnInit {
         console.log(this.arrangement);
 
         this.loadRates();
-        this.getUser();
+        this.getUser();  //for creating rate
       },
       error: () => {
         console.log('Error fetching arrangement details');
@@ -248,5 +246,38 @@ export class ArrangementDetailsComponent implements OnInit {
       return new Date(this.arrangement.date_from) > today;
     }
     return false;
+  }
+
+
+  checkCustomerPastReservation(arrangementId: number): void {
+    if (this.user && this.user.id) {
+
+      this.reservationService.getReservationsByUserId(this.user.id).subscribe({
+        next: (reservations) => {
+
+          const pastReservations = reservations.filter(reservation => {
+            const dateTo = new Date(reservation.arrangement.date_to);
+            const now = new Date();
+
+            const dateToUTC = Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate());
+            const nowUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+
+            return dateToUTC < nowUTC;
+          });
+
+          console.log('Past reservations:', pastReservations);
+
+          this.isCustomerWithPastReservation = pastReservations.some(reservation => {
+            return reservation.arrangement.id == this.arrangement.id;
+          });
+
+          console.log('Result:', this.isCustomerWithPastReservation);
+          console.log("Roles: ", this.roles);
+        },
+        error: (err) => {
+          console.error('Error fetching reservations:', err);
+        }
+      });
+    }
   }
 }

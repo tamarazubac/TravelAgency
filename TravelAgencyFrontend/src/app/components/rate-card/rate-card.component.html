@@ -15,7 +15,7 @@
           >star</mat-icon>
         </ng-container>
 
-        <button mat-icon-button  *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" (click)="openDeleteDialog(rate.id,'')" style="margin-left: 20px; margin: top 10px;;">
+        <button mat-icon-button  *ngIf="roles.includes('CUSTOMER') && isWrittenByCustomer" (click)="openDeleteDialog(rate.id,'')" style="margin-left: 20px; margin: top 10px;;">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

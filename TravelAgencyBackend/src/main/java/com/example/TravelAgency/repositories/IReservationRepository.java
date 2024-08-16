@@ -23,7 +23,7 @@ public interface IReservationRepository extends JpaRepository<Reservation,Long> 
     @Query("SELECT SUM(r.fullPrice) FROM Reservation r JOIN r.arrangement a WHERE a.destination.id = :destinationId AND r.arrangement.dateTo < CURRENT_DATE")
     Double calculateTotalEarnedByDestination(Long destinationId);
 
-    @Query("SELECT COUNT(r) FROM Reservation r JOIN r.arrangement a WHERE a.destination.id = :destinationId")
+    @Query("SELECT COUNT(r) FROM Reservation r JOIN r.arrangement a WHERE a.destination.id = :destinationId AND r.arrangement.dateTo < CURRENT_DATE")
     Integer countReservationsByDestination(@Param("destinationId") Long destinationId);
 
     @Query("SELECT r FROM Reservation r WHERE r.arrangement.dateFrom BETWEEN :startDate AND :endDate")

@@ -67,7 +67,7 @@
       </div>
 
       <div class="add-rate-container">
-        <button mat-raised-button class="details-button" style="font-weight: 300;" (click)="openAddRateDialog()" *ngIf="roles.includes('CUSTOMER')">
+        <button mat-raised-button class="details-button" style="font-weight: 300;" (click)="openAddRateDialog()" *ngIf="roles.includes('CUSTOMER') && isCustomerWithPastReservation">
           <mat-icon>star_rate</mat-icon>
           Add Rating
         </button>

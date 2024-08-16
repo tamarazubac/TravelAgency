@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { ArrangementCardComponent } from "./components/arrangement-card/arrangement-card.component";
 import { SearchComponent } from "./components/search/search.component";
-import { EditDestinationDialogComponent } from './components/edit-destination-dialog/edit-destination-dialog.component';
+
 
 
 @NgModule({

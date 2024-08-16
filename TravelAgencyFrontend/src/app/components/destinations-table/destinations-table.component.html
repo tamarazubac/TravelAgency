@@ -10,7 +10,7 @@
 
   <div class="card-container">
     <div *ngFor="let destination of destinations" style="margin-bottom: 2%;margin-top: 1%;">
-      <app-destination-card [destination]="destination"></app-destination-card>
+      <app-destination-card [destination]="destination" (destinationUpdated)="getAllDestinations()"></app-destination-card>
     </div>
   </div>
 </div>

@@ -57,7 +57,6 @@ public class RestUserController {
     }
 
     @PostMapping(value="/admin")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<User>  createAdmin(@RequestBody UserDTO newUser){
         Optional<User> result = userController.createAdmin(newUser);
         if (result.isPresent()) {

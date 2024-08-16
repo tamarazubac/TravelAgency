@@ -42,8 +42,6 @@ export class CreateDestinationDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDestinations();
-
-
   }
 
   closeDialog(): void {
@@ -67,13 +65,8 @@ export class CreateDestinationDialogComponent implements OnInit {
           if(response){
             this.createdDestinationId=response.id;
             this.uploadImages(this.createdDestinationId); //uploading images
-
           }
-
           this.snackBar.open('Destination created successfully!', 'Close', { duration: 2000 });
-
-
-
           this.destinationForm.reset();
         },
         error: (err) => {
@@ -105,6 +98,7 @@ export class CreateDestinationDialogComponent implements OnInit {
       this.selectedFile = event.target.files[0];
     }
   }
+
 
   addImageToList(): void {
     if (this.selectedFile) {

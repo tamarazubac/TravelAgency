@@ -22,7 +22,7 @@ public class RestReservationController {
     public ReservationController reservationController;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('SALESMAN')")
+    @PreAuthorize("hasAnyAuthority('SALESMAN','ADMIN')")
     public ResponseEntity<List<ReservationDTO>> findAll(){
         List<ReservationDTO> result= reservationController.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);

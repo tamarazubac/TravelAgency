@@ -1,5 +1,3 @@
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -8,14 +6,8 @@ import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
 import { RoleService } from 'src/app/services/role/role.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from 'src/app/common/layout/layout.module';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/common/material/material.module';
 
@@ -73,6 +65,10 @@ export class EditRolesDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  hasAdminRole(): boolean {
+    return this.currentRoles.includes('ADMIN');
+  }
+
   saveRoles(){
     this.currentRoles=[]
     const selectedRoles = this.rolesForm.get('newRoles')?.value;
@@ -89,6 +85,7 @@ export class EditRolesDialogComponent implements OnInit {
               if (!this.currentRoles.includes(role)) {
                 this.currentRoles.push(role);
               }
+              this.closeDialog();
             },
             error: (err) => {
               console.error('Failed to add role', err);
@@ -158,7 +155,5 @@ export class EditRolesDialogComponent implements OnInit {
   //     this.snackBar.open('No role selected', 'Close', { duration: 2000 });
   //   }
   // }
-
-
 
 }

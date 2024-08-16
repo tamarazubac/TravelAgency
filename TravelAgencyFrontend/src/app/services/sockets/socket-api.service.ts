@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/app/common/env/env';
 import { Message } from 'src/app/models/message';
-import { SocketService } from './socket.service';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
@@ -24,7 +23,7 @@ export class SocketApiService {
   isCustomSocketOpened = false;
   messages: Message[] = [];
 
-  constructor(private socketService: SocketService, private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar) {
     this.initializeWebSocketConnection();
   }
 
@@ -39,22 +38,6 @@ export class SocketApiService {
       that.isLoaded = true;
       that.openGlobalSocket()
     });
-
-  }
-
-  sendUserIdOnLogin(userId: string) {
-    this.stompClient.send("/send/userId", {}, JSON.stringify({ userId }));
-  }
-
-
-  sendMessageUsingSocket(message: Message) {
-      this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
-      console.log('Notification sent:', message);
-  }
-
-  sendMessageUsingRest(message: Message) {
-      this.socketService.postRest(message).subscribe(() => {
-      });
 
   }
 
@@ -75,7 +58,6 @@ export class SocketApiService {
   }
 
   handleResult(message: { body: string; }) {
-    console.log("HANDLE RESULTT")
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
       console.log("MESSAGE : "+message)
@@ -91,7 +73,7 @@ export class SocketApiService {
   }
 
 
-getStompClient(): BehaviorSubject<any> {
-  return this.stompClient;
-}
+  getStompClient(): BehaviorSubject<any> {
+    return this.stompClient;
+    }
 }

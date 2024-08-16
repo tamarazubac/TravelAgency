@@ -1,8 +1,31 @@
 .custom-card {
   width: 100%;
   margin-bottom: 30px;
-  margin:15px;
+  margin: 15px;
+  position: relative; /* Ensure the header and buttons are positioned relative to the card */
+  padding: 16px; /* Add some padding to the card content */
 }
+
+.card-header {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+.card-header button {
+
+  border-radius: 50%;
+}
+
+.card-header button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+
 
 .custom-card img {
   display: block;
@@ -23,7 +46,6 @@
   font-weight: 300;
   display: block;
   margin: 15px auto 0;
-  /* background-color: #3d9bf9; */
   background-color: rgb(40, 155, 176);
   color: white;
   padding: 8px 16px;
@@ -52,11 +74,13 @@ p {
   color: #333;
 }
 
-*{
-  padding: 2px;
-}
-
 .outdated-card {
-  /* background-color: #f6e7e7; */
   border: 1px solid #ec8585;
 }
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 16px 0;
+}
+

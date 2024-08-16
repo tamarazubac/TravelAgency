@@ -1,12 +1,6 @@
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from 'src/app/common/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit,ViewChild } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -42,9 +36,7 @@ export class DestinationsTableComponent implements OnInit{
   }
   ngOnInit(): void {
 
-
     this.getAllDestinations();
-
 
     this.authService.userState.subscribe((result) => {
       this.roles=[]
@@ -58,13 +50,10 @@ export class DestinationsTableComponent implements OnInit{
           this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
         }
 
-        console.log("Roles 1 : ",this.roles)
-
       }else{
         this.rolesObjects.push({ roleName:"UNAUTHENTICATED" });
         this.roles=[];
         this.roles = this.rolesObjects.map(role => role.roleName);
-        console.log("Roles 2 : ",this.roles)
       }
     })
   }
@@ -95,7 +84,6 @@ export class DestinationsTableComponent implements OnInit{
       this.getAllDestinations();
 
     });
-
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Arrangement } from 'src/app/models/arrangement';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,8 +28,12 @@ export class DestinationCardComponent {
   @Input()
   destination:Destination;
 
-  constructor(private router:Router, private destinationService:DestinationService,
-              private dialog:MatDialog,private snackBar:MatSnackBar
+  @Output() destinationUpdated = new EventEmitter<void>();
+
+  constructor(private router:Router,
+              private destinationService:DestinationService,
+              private dialog:MatDialog,
+              private snackBar:MatSnackBar
   ){}
 
   images: string[] = [];
@@ -89,6 +93,7 @@ export class DestinationCardComponent {
     dialogRef.afterClosed().subscribe(result => {
 
         this.loadImages();
+        this.destinationUpdated.emit();
 
     });
   }
@@ -103,6 +108,7 @@ export class DestinationCardComponent {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.destinationUpdated.emit();
       },
       error: (err) => {
         console.error('Failed to delete user', err);

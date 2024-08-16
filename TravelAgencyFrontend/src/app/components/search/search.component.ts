@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DestinationService } from 'src/app/services/destination/destination.service';
 import { ArrangementService } from 'src/app/services/arrangement/arrangement.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { Destination } from 'src/app/models/destination';
 import { Arrangement } from 'src/app/models/arrangement';
 import { MaterialModule } from 'src/app/common/material/material.module';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { Role } from 'src/app/models/role';
 
 @Component({
   selector: 'app-search',
@@ -20,12 +21,18 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   destinations: Destination[] = [];
 
+  roles:String[]=[];
+  rolesObjects:Role[]=[];
+
+  minDate: Date |undefined ;
+
   @Output() search = new EventEmitter<Arrangement[]>();
 
   constructor(
     private fb: FormBuilder,
     private destinationService: DestinationService,
-    private arrangementService: ArrangementService
+    private arrangementService: ArrangementService,
+    private authService:AuthenticationService
   ) {
     this.searchForm = this.fb.group({
       dateFrom: [null],
@@ -35,6 +42,32 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.authService.userState.subscribe(result => {
+      this.roles = [];
+      this.rolesObjects = [];
+
+      if (result && result !== null) {
+        this.rolesObjects = result.roles;
+        this.roles = this.rolesObjects.map(role => role.roleName);
+
+        if (this.roles.includes('UNAUTHENTICATED')) {
+          this.roles = this.roles.filter(role => role !== 'UNAUTHENTICATED');
+          this.minDate = new Date(); // minDate - today --> UNAUNTHENTICATED
+        } else if (this.roles.includes('CUSTOMER')) {
+          this.minDate = new Date(); // minDate - today --> CUSTOMER
+        } else if (this.roles.includes('ADMIN') || this.roles.includes('SALESMAN')) {
+          this.minDate = undefined;
+        }
+      } else {
+        this.rolesObjects.push({ roleName: 'UNAUTHENTICATED' });
+        this.roles = [];
+        this.roles = this.rolesObjects.map(role => role.roleName);
+        this.minDate = new Date();
+      }
+    });
+
+
     this.destinationService.getAll().subscribe({
       next: (data) => {
         this.destinations = data;
@@ -43,6 +76,7 @@ export class SearchComponent implements OnInit {
         console.log("Error fetching destinations!");
       }
     });
+
   }
 
   onSearch(): void {
@@ -52,6 +86,12 @@ export class SearchComponent implements OnInit {
     if (dateFrom && dateTo && destination) {
       this.arrangementService.findByDestinationAndDates(dateFrom, dateTo, destination).subscribe({
         next: (data) => {
+          if (this.roles.includes('UNAUTHENTICATED') || this.roles.includes('CUSTOMER') ) {
+            const currentDate = new Date();
+            data = data.filter(arrangement =>
+              new Date(arrangement.date_to) > currentDate
+            );
+          }
           this.search.emit(data);
         },
         error: (_) => {

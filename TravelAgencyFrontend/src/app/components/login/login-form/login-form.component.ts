@@ -1,12 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBar
+import { MatSnackBar} from '@angular/material/snack-bar';
 import { LogIn } from 'src/app/models/logIn';
 import { AuthenticationService } from '../../../services/authentication/authentication.service';
 import { AuthResponse } from 'src/app/models/authResponse';
@@ -54,11 +50,10 @@ export class LoginFormComponent {
           this.authenticationService.initUser();
           this.authenticationService.setUser();
 
-
+          this.router.navigate(['home']);
 
           this.socketApiService.openSocket(loginCredentials.username);
 
-          this.router.navigate(['home']);
         },
         error: (err) => {
           console.error('Login failed', err);

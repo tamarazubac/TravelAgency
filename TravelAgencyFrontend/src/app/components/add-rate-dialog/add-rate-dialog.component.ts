@@ -1,4 +1,3 @@
-import { MatInputModule } from '@angular/material/input';
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,17 +5,15 @@ import { Arrangement } from 'src/app/models/arrangement';
 import { Rate } from 'src/app/models/rate';
 import { User } from 'src/app/models/user';
 import { RateService } from 'src/app/services/rate/rate.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from 'src/app/common/material/material.module';
 
 @Component({
   selector: 'app-add-rate-dialog',
   templateUrl: './add-rate-dialog.component.html',
   styleUrls: ['./add-rate-dialog.component.css'],
   standalone: true,
-  imports: [MatButtonModule,MatFormFieldModule,ReactiveFormsModule,MatIconModule,MatInputModule,CommonModule]
+  imports: [MaterialModule,ReactiveFormsModule,CommonModule]
 })
 export class AddRateDialogComponent {
   rateForm: FormGroup;

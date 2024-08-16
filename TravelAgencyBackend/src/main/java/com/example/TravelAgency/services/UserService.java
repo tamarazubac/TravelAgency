@@ -61,6 +61,10 @@ public class UserService implements IUserService {
         if(userRepository.existsById(user.id)){
             return Optional.of(userRepository.saveAndFlush(user));
         }
+
+        for(Role r:user.roles){
+            addRoleToUser(user.id,r.roleName);
+        }
         return Optional.empty();
     }
 

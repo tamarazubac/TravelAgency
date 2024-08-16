@@ -1,6 +1,4 @@
 <mat-toolbar color="primary" class="toolbar">
-  <!-- <img src="../../../assets/images/timefortravel-high-resolution-logo.png" alt="Logo" class="logo"/> -->
-
   <div class="toolbar-spacer"></div>
 
   <mat-menu #menu="matMenu">
@@ -19,11 +17,12 @@
     Reports
   </button>
 
-  <button *ngIf="isLoggedIn() && roles.includes('ADMIN')" mat-icon-button [routerLink]="['allUsers']">
-    <mat-icon>group</mat-icon>
+  <button *ngIf="isLoggedIn() && roles.includes('ADMIN')" mat-icon-button [routerLink]="['allUsers',userId]"  style="width: 100px;font-size:16px;">
+    <mat-icon style="margin-right: 5px;">group</mat-icon>
+    Users
   </button>
 
-  <button *ngIf="!isLoggedIn() && roles.includes('UNAUTHENTICATED')" mat-icon-button [routerLink]="['register']" class="auth-button">
+  <button *ngIf="!isLoggedIn()" mat-icon-button [routerLink]="['register']" class="auth-button">
     Register
   </button>
 
@@ -43,7 +42,13 @@
     <span class="button-text">Reservations</span>
   </button>
 
-  <button *ngIf="!isLoggedIn() && roles.includes('UNAUTHENTICATED')" mat-icon-button [routerLink]="['login']" class="auth-button">
+  <!-- <button  mat-icon-button *ngIf="isLoggedIn()" style="width: 150px;font-size:16px;"   [routerLink]="['/editAccount']">
+    <mat-icon>edit</mat-icon>
+    <span class="button-text">Edit Account</span>
+  </button> -->
+
+
+  <button *ngIf="!isLoggedIn()" mat-icon-button [routerLink]="['login']" class="auth-button">
     Log In
   </button>
 
@@ -52,18 +57,33 @@
     Destinations
   </button>
 
-  <button *ngIf="isLoggedIn() &&  roles.includes('SALESMAN') || roles.includes('ADMIN')" mat-icon-button [routerLink]="['allArrangements']" style="width: 150px; font-size: 16px;">
+  <button *ngIf="isLoggedIn() &&  roles.includes('SALESMAN') || roles.includes('ADMIN')" mat-icon-button [routerLink]="['addArrangement']" style="width: 180px; font-size: 16px;">
     <mat-icon style="margin-right: 5px;">explore</mat-icon>
-    Arrangements
+    Add Arrangement
   </button>
 
   <button mat-icon-button [routerLink]="['home']">
     <mat-icon>home</mat-icon>
   </button>
 
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/editAccount']">
+      <mat-icon>edit</mat-icon>
+      My Account
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Log Out
+    </button>
+  </mat-menu>
 
-  <button *ngIf="isLoggedIn() && !roles.includes('UNAUTHENTICATED')" mat-icon-button (click)="logout()">
-    <mat-icon>logout</mat-icon>
+  <button *ngIf="isLoggedIn()" mat-icon-button [matMenuTriggerFor]="userMenu" style="font-size: 16px;">
+    <mat-icon>person</mat-icon>
   </button>
+
+
+  <!-- <button *ngIf="isLoggedIn() && !roles.includes('UNAUTHENTICATED')" mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button> -->
 </mat-toolbar>
 

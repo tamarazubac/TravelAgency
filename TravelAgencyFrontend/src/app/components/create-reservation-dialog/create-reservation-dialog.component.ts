@@ -30,16 +30,14 @@ export class CreateReservationDialogComponent implements OnInit{
     private reservationService:ReservationService,
     public dialogRef: MatDialogRef<CreateReservationDialogComponent>,
     private snackBar:MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: { arrangement: Arrangement; user: User }
-  ) {
-
-    this.reservationForm = this.fb.group({
-
-      date_from: [{ value: this.arrangement?.date_from || '', disabled: true }],
-      date_to: [{ value: this.arrangement?.date_to || '', disabled: true }],
-      destination: [{ value: this.arrangement?.destination?.city_name || '', disabled: true }],
-      price_per_person:[{value:this.arrangement?.price_per_person || '',disabled:true}],
-      number_of_people:['']
+    @Inject(MAT_DIALOG_DATA) public data: { arrangement: Arrangement; user: User })
+    {
+      this.reservationForm = this.fb.group({
+        date_from: [{ value: this.arrangement?.date_from || '', disabled: true }],
+        date_to: [{ value: this.arrangement?.date_to || '', disabled: true }],
+        destination: [{ value: this.arrangement?.destination?.city_name || '', disabled: true }],
+        price_per_person:[{value:this.arrangement?.price_per_person || '',disabled:true}],
+        number_of_people:['']
     });
 
   }
@@ -95,7 +93,6 @@ export class CreateReservationDialogComponent implements OnInit{
 
     }
 
-
     const reservation: Reservation = {
       id: undefined,
       number_of_people: numOfPeople,
@@ -125,7 +122,14 @@ export class CreateReservationDialogComponent implements OnInit{
     );
 
     this.dialogRef.close();
+}
 
+
+get isSubmitDisabled(): boolean {
+  const numOfPeople = this.reservationForm.get('number_of_people')?.value;
+  const result = numOfPeople <= 0 || numOfPeople > this.arrangement.free_seats;
+  console.log('isSubmitDisabled:', result);
+  return result;
 }
 
 }

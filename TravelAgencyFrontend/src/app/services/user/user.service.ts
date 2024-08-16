@@ -54,5 +54,9 @@ export class UserService {
     return this.httpClient.post<User>(`${environment.apiHost}users`, newUser);
   }
 
+  update(userId: number|undefined, updatedUser: User): Observable<User> {
+    return this.httpClient.put<User>(`${environment.apiHost}users/${userId}`, updatedUser);
+  }
+
 
 }

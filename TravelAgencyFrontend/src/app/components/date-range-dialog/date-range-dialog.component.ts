@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReportService } from 'src/app/services/reports/report.service';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/common/material/material.module';
 import { FormsModule } from '@angular/forms';
 

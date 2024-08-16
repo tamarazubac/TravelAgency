@@ -1,0 +1,59 @@
+<div style="text-align: center;">
+  <h2 class="register-header" style="font-weight: 300;">Edit Account</h2>
+  <form [formGroup]="editAccountDataForm" (ngSubmit)="saveChanges()">
+    <div class="form-field-container">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Last Name" formControlName="surname">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="username" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide.toString()">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide.toString()">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Assign New Roles</mat-label>
+        <mat-select formControlName="newRoles" class="role-select" multiple>
+          <mat-option *ngFor="let role of availableRoles" [value]="role.roleName">
+            {{ role.roleName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-button id="saveButton" type="submit" style="background-color: #1e88e5; color: white; font-weight: 300;" [disabled]="!editAccountDataForm.valid">Save Changes</button>
+      </div>
+
+      <div *ngIf="editAccountDataForm.hasError('passwordMismatch')" class="error-message">
+        Passwords do not match.
+      </div>
+    </div>
+  </form>
+</div>

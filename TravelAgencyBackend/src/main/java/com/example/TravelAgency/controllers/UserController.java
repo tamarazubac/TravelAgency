@@ -1,5 +1,6 @@
 package com.example.TravelAgency.controllers;
 
+import com.example.TravelAgency.dtos.RoleDTO;
 import com.example.TravelAgency.dtos.UserDTO;
 import com.example.TravelAgency.models.Role;
 import com.example.TravelAgency.models.User;
@@ -100,6 +101,9 @@ public class UserController {
 
     public Optional<User> update(UserDTO userDTO, Long id){
         //from putDTO to entity
+
+        String encoded=passwordEncoder.encode(userDTO.password);
+        userDTO.setPassword(encoded);
         return  userService.update(toEntity(userDTO,id));
     }
 
@@ -137,11 +141,21 @@ public class UserController {
         result.setUsername(userDTO.username);
         result.setFirstName(userDTO.first_name);
         result.setLastName(userDTO.last_name);
+        result.setRoles(toRoleDTOList(userDTO.roles));
 
         if(id!=-1L){
             result.id=id;     //set id
         }
 
+        return result;
+    }
+
+    public List<Role> toRoleDTOList(List<RoleDTO> roles){
+        List<Role> result=new ArrayList<>();
+        for(RoleDTO r:roles){
+           Optional<Role> ro=roleService.findByName(r.roleName);
+           result.add(ro.get());
+        }
         return result;
     }
 

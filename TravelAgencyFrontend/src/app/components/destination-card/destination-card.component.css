@@ -1,5 +1,5 @@
 .custom-card {
-  max-width: 600px; /* Adjust as needed */
+  max-width: 600px;
   margin:auto ;
 }
 
@@ -58,13 +58,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px; /* Adjust spacing below the header if needed */
+  margin-bottom: 10px;
 }
 
 .divider {
   border: none;
-  border-top: 1px solid #ddd; /* Adds a light gray line */
-  margin: 16px 0; /* Adds space above and below the line */
+  border-top: 1px solid #ddd;
+  margin: 16px 0;
 }
 
 

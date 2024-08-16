@@ -12,16 +12,11 @@ div {
   justify-content: flex-end;
 }
 
-/* button {
-  margin-right: 10px;
-} */
-
 
 button{
   background-color:white;
   color: grey;
   font-weight: 300;
-  /* border: 1px solid; */
   border-radius: 4px;
   padding: 8px 16px;
   display: flex;
@@ -32,7 +27,7 @@ button{
 
 .mat-menu-item:hover {
   background-color: whitesmoke;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sivi senka pri prelazu miša */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .button-text {
@@ -41,20 +36,20 @@ button{
 }
 
 .custom-menu {
-  border-radius: 4px; /* Zaobljeni uglovi */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sivi senka */
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .menu-item {
-  font-weight: 400; /* Normalna debljina fonta */
-  background-color: #f8f9fa; /* Svetlo siva boja pozadine */
-  color: #343a40; /* Tamno siva boja teksta */
-  border-radius: 4px; /* Zaobljeni uglovi */
-  transition: background-color 0.3s; /* Glatki prelazi */
+  font-weight: 400;
+  background-color: #f8f9fa;
+  color: #343a40;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
 .menu-item:hover {
-  background-color: #e9ecef; /* Još svetlija siva boja pri prelazu miša */
+  background-color: #e9ecef;
 }
 
 

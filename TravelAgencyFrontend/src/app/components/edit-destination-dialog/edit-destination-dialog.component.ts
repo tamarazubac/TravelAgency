@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/common/material/material.module';
@@ -20,6 +20,8 @@ export class EditDestinationDialogComponent {
   selectedFile: File | null = null;
   imageList: { file: File, url: string }[] = [];
   existingImages: string[] = [];
+
+  @Output() destinationUpdated = new EventEmitter<void>();
 
   constructor(
     private destinationService: DestinationService,
@@ -87,6 +89,7 @@ export class EditDestinationDialogComponent {
   saveDestination(): void {
 
     this.uploadImages(this.data.destination.id);
+    this.closeDialog();
 
   }
 
@@ -96,6 +99,7 @@ export class EditDestinationDialogComponent {
       this.destinationService.uploadImage(destinationId, image.file).subscribe({
         next: () => {
           console.log(`Image uploaded successfully for destination ${destinationId}`);
+          this.destinationUpdated.emit();
         },
         error: (err) => {
           console.error('Failed to upload image', err);
@@ -105,6 +109,7 @@ export class EditDestinationDialogComponent {
   }
 
   closeDialog(): void {
+    this.destinationUpdated.emit();
     this.dialogRef.close();
   }
 }

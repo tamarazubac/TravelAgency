@@ -6,9 +6,13 @@
   <app-search (search)="onSearch($event)"></app-search>
 </div>
 
+<div *ngIf="noResultMessage" class="no-results-message" style="font-weight: 300;margin: 50px;font-size: 18px;">
+  {{ noResultMessage }}
+</div>
+
 
 <div class="card-container">
   <div *ngFor="let arrangement of arrangementList" style="margin-bottom: 2%;margin-top: 1%;">
-    <app-arrangement-card [arrangement]="arrangement"></app-arrangement-card>
+    <app-arrangement-card [arrangement]="arrangement"  (arrangementUpdated)="getArrangements()"></app-arrangement-card>
   </div>
 </div>

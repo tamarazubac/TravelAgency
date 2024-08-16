@@ -3,9 +3,9 @@ import { MaterialModule } from 'src/app/common/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit,ViewChild } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -13,6 +13,10 @@ import { Reservation } from 'src/app/models/reservation';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { UserService } from 'src/app/services/user/user.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { of, switchMap } from 'rxjs';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -28,10 +32,13 @@ export class ReservationTableComponent {
   id: number;
   type:string | null;
 
+  userId:number;
+
   constructor(private route: ActivatedRoute,
              private reservationService:ReservationService,
              private snackBar:MatSnackBar,
-             private dialog:MatDialog
+             private dialog:MatDialog,
+             private userService:UserService
   ) { }
 
   reservations: Reservation[] = [];
@@ -44,6 +51,7 @@ export class ReservationTableComponent {
 
 
   ngOnInit(): void {
+
     this.route.paramMap.subscribe(params => {
       this.id = Number(params.get('id'));
       this.type = params.get('type');
@@ -79,20 +87,35 @@ export class ReservationTableComponent {
   }
 
   loadByUserId(): void {
-    this.reservationService.getReservationsByUserId(this.id)
-      .subscribe({
+    const accessToken: any = localStorage.getItem('user');
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(accessToken);
+
+    if (decodedToken) {
+      this.userService.getByUsername(decodedToken.sub).pipe(
+        switchMap((user: User) => {
+          if (user && user.id) {
+            this.userId = user.id;
+            return this.reservationService.getReservationsByUserId(this.userId);
+          } else {
+            return of([]);
+          }
+        })
+      ).subscribe({
         next: (data: Reservation[]) => {
           this.reservations = data;
-          console.log(this.reservations)
+          console.log(this.reservations);
           this.dataSource = new MatTableDataSource<Reservation>(this.reservations);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-
         },
         error: (err) => {
           console.error('Failed to load reservations', err);
         }
       });
+    } else {
+      console.error('Error decoding JWT token');
+    }
   }
 
   loadAll(): void {

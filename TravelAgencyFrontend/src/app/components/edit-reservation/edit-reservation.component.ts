@@ -1,21 +1,11 @@
-import { MatIconModule } from '@angular/material/icon';
+
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { Arrangement } from 'src/app/models/arrangement';
 import { User } from 'src/app/models/user';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule} from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { LayoutModule } from 'src/app/common/layout/layout.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reservation } from 'src/app/models/reservation';
@@ -148,5 +138,13 @@ export class EditReservationComponent implements OnInit{
 
 onCancel(){
   this.dialogRef.close();
+}
+
+
+get isSubmitDisabled(): boolean {
+  const numOfPeople = this.reservationForm.get('number_of_people')?.value;
+  const result = numOfPeople <= 0 || numOfPeople > this.arrangement.free_seats;
+  console.log('isSubmitDisabled:', result);
+  return result;
 }
 }

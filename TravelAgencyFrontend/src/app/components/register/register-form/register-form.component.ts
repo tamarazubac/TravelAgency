@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, ValidationErrors} from '@angular/forms';
+import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup, AbstractControl, ValidationErrors} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from 'src/app/models/user';
@@ -65,6 +65,11 @@ export class RegisterFormComponent {
         },
         (error) => {
           console.error('Error creating user:', error);
+          this.snackBar.open('This username is already taken!', 'Close', {
+            duration: 4000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          });
         }
       );
 

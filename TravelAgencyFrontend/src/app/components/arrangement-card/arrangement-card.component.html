@@ -1,6 +1,19 @@
 <mat-card class="custom-card" [ngClass]="{'outdated-card': isOutdated()}">
+
+  <div class="card-header">
+    <button mat-icon-button class="edit-button" *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" (click)="editArrangement()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button class="delete-button" *ngIf="roles.includes('SALESMAN') || roles.includes('ADMIN')" (click)="deleteArrangement()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+
   <mat-card-content>
     <h2>{{ arrangement.destination?.city_name }}, {{ arrangement.destination?.country_name }}</h2>
+
+    <hr class="divider">
 
     <img *ngIf="images && images.length > 0"
          [src]="images[0]"

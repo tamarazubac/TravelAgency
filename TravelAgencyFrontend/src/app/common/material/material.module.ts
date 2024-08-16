@@ -54,6 +54,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatListModule,
     MatSelectModule,
+    MatPaginatorModule,
+    MatSortModule
 
   ]
 })

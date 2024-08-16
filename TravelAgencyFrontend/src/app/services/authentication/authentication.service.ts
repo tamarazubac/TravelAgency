@@ -98,6 +98,7 @@ export class AuthenticationService {
    }).subscribe({
      next:()=>{
        localStorage.removeItem('user');
+       localStorage.clear();
        this.user$.next(null);
      }
    });

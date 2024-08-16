@@ -51,6 +51,14 @@ mat-form-field {
   font-weight: 300;
 }
 
+.submit-button:disabled {
+  background-color: #c0c0c0;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+
 
 
 

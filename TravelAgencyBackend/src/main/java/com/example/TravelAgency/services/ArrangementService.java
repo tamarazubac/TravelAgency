@@ -67,18 +67,22 @@ public class ArrangementService implements IArrangementService {
     @Transactional
     public void delete(Long id) {
 
-        List<Reservation> reservations = reservationRepository.findByArrangementId(id);
-        for (Reservation reservation : reservations) {
-            reservationRepository.deleteById(reservation.getId());
-        }
+        Optional<Arrangement> arrangement=arrangementRepository.findById(id);
+        if(arrangement.isPresent()) {
 
-        // Delete all rates associated with the arrangement
-        List<Rate> rates = rateRepository.findByArrangementId(id);
-        for (Rate rate : rates) {
-            rateRepository.deleteById(rate.getId());
-        }
+            List<Reservation> reservations = reservationRepository.findByArrangementId(id);
+            for (Reservation reservation : reservations) {
+                reservationRepository.deleteById(reservation.getId());
+            }
 
-        // Finally, delete the arrangement itself
-        arrangementRepository.deleteById(id);
+            // Delete all rates associated with the arrangement
+            List<Rate> rates = rateRepository.findByArrangementId(id);
+            for (Rate rate : rates) {
+                rateRepository.deleteById(rate.getId());
+            }
+
+            // Finally, delete the arrangement itself
+            arrangementRepository.deleteById(id);
+        }
     }
 }

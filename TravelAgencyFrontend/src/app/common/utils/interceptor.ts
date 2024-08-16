@@ -16,7 +16,7 @@ export class Interceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
 
     const accessToken: any = localStorage.getItem('user');
-    console.log("Access token : ",accessToken)
+    // console.log("Access token : ",accessToken)
 
     if (req.headers.get('skip')) return next.handle(req);
 
